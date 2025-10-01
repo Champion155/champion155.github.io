@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaffé</title>
+  <meta name="google-site-verification" content="9NiWaCFq0tdSavgY0qFQXcIoE1UgyWKz1xmJ3A9TnJE" />
+  <meta name="description" content="Kaffé — авторский кофе и атмосферные кофейни с душой." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #6F4E37;
+      --secondary: #C4A484;
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .fade-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+      z-index: 1;
+    }
+    .menu-item:hover .menu-hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .mobile-menu {
+      transition: all 0.3s ease-in-out;
+      transform: translateX(100%);
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .floating-button {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .coffee-drip {
+      position: relative;
+    }
+    .coffee-drip::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50% 50% 0 0;
+    }
+
+    /* Стили для корзины */
+.cart-item {
+  transition: all 0.3s ease;
+}
+.cart-item-remove {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.cart-item:hover .cart-item-remove {
+  opacity: 1;
+}
+.quantity-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.quantity-btn:hover {
+  background-color: #e5e7eb;
+}
+
+/* Стили для личного кабинета и отслеживания заказов */
+.order-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.order-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.order-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.status-processing {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+.status-shipping {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+.status-delivered {
+  background-color: #dcfce7;
+  color: #166534;
+}
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+.delete-order-btn {
+  transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.delete-order-btn:hover {
+  background-color: #fee2e2;
+}
+.admin-delete-btn {
+  transition: all 0.2s ease;
+  min-width: 40px;
+}
+
+/* Стили для модального окна входа/регистрации */
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+}
+.auth-tab {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+.auth-tab.active {
+  border-bottom-color: #6F4E37;
+  color: #6F4E37;
+}
+.auth-form {
+  display: none;
+}
+.auth-form.active {
+  display: block;
+}
+
+/* Стили для формы оплаты */
+.payment-form-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.payment-form-container.active {
+  max-height: 500px;
+  margin-top: 20px;
+}
+.credit-card-form {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.card-element-container {
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background: white;
+}
+.card-icons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+.card-icon {
+  width: 40px;
+  height: 25px;
+  object-fit: contain;
+}
+.card-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+.card-row .form-group {
+  flex: 1;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #4b5563;
+}
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 16px;
+}
+.form-group input:focus {
+  outline: none;
+  border-color: #6F4E37;
+  box-shadow: 0 0 0 2px rgba(111, 78, 55, 0.2);
+}
+.pay-button {
+  width: 100%;
+  padding: 12px;
+  background: #6F4E37;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pay-button:hover {
+  background: #5a3d2a;
+}
+.pay-button:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}
+.payment-processing {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+.payment-processing.active {
+  display: block;
+}
+.payment-success {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  color: #166534;
+}
+.payment-success.active {
+  display: block;
+}
+.payment-error {
+  display: none;
+  color: #991b1b;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.payment-error.active {
+  display: block;
+}
+/* Стили для способа получения */
+.delivery-method {
+  margin-bottom: 1rem;
+}
+.delivery-option {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+.delivery-option:hover {
+  border-color: #6F4E37;
+}
+.delivery-option.active {
+  border-color: #6F4E37;
+  background-color: #f8f5f2;
+}
+.delivery-option input {
+  margin-right: 0.5rem;
+}
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white z-50 p-8 flex flex-col items-center justify-center">
+    <button id="closeMenu" class="absolute top-6 right-6 text-2xl">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex flex-col space-y-8 text-center">
+      <a href="#about" class="text-2xl font-semibold hover:text-amber-800 transition">О нас</a>
+      <a href="#menu" class="text-2xl font-semibold hover:text-amber-800 transition">Меню</a>
+      <a href="#process" class="text-2xl font-semibold hover:text-amber-800 transition">Процесс</a>
+      <a href="#visit" class="text-2xl font-semibold hover:text-amber-800 transition">Контакты</a>
+    </nav>
+    <div class="mt-12 flex space-x-6">
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-reddit"></i></a>
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-vk"></i></a>
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="w-full fixed top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="text-2xl font-bold tracking-tight text-amber-900">Kaffé</div>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="about.html" class="hover:text-amber-800 transition">О нас</a>
+        <a href="#menu" class="hover:text-amber-800 transition">Меню</a>
+        <a href="#process" class="hover:text-amber-800 transition">Процесс</a>
+        <a href="#visit" class="hover:text-amber-800 transition">Контакты</a>
+        <a href="promotions.html" class="hover:text-amber-800 transition">Акции</a>
+      </nav>
+      <button id="openMenu" class="md:hidden text-xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative h-screen flex items-center justify-center pt-24 overflow-hidden fade-overlay">
+    <div class="absolute inset-0 w-full h-full">
+      <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1920&q=80" 
+           alt="Бариста готовит эспрессо" 
+           class="absolute inset-0 w-full h-full object-cover" 
+           id="heroImage"/>
+    </div>
+    <div class="relative z-10 text-center px-6" data-aos="fade-up">
+      <h1 class="text-white text-5xl md:text-7xl font-bold leading-tight mb-6 drop-shadow-2xl">Искусство в каждой чашке</h1>
+      <p class="text-white text-xl mb-8 max-w-2xl mx-auto drop-shadow-lg">Авторский кофе с душой — местной обжарки, отборных сортов, идеального приготовления.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#menu" class="inline-block bg-amber-800 hover:bg-amber-700 text-white px-8 py-4 font-semibold uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+          Наше меню
+        </a>
+        <a href="#visit" class="inline-block border-2 border-white text-white hover:bg-white hover:text-amber-900 px-8 py-4 font-semibold uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+          Найти нас
+        </a>
+      </div>
+    </div>
+    <a href="#about" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-2xl floating-button">
+      <i class="fas fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-16 bg-amber-900 text-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="p-6" data-aos="fade-up">
+          <div class="text-4xl font-bold mb-2">250+</div>
+          <div class="text-sm uppercase tracking-wider">Чашек в день</div>
+        </div>
+        <div class="p-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-4xl font-bold mb-2">12</div>
+          <div class="text-sm uppercase tracking-wider">Моносортов</div>
+        </div>
+        <div class="p-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-4xl font-bold mb-2">8</div>
+          <div class="text-sm uppercase tracking-wider">Бариста</div>
+        </div>
+        <div class="p-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="text-4xl font-bold mb-2">100%</div>
+          <div class="text-sm uppercase tracking-wider">Удовлетворения</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Coffee Menu -->
+  <section id="menu" class="py-32 px-6 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-amber-800 font-medium uppercase tracking-wider">Наши предложения</span>
+        <h2 class="text-4xl font-semibold mb-4 mt-2">Меню</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Фирменные напитки и сезонные предложения для настоящих ценителей.</p>
+      </div>
+      
+      <div class="mb-16" data-aos="fade-up">
+        <h3 class="text-2xl font-semibold mb-6 coffee-drip">Кофе</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="menu-item bg-white rounded-2xl shadow-md p-6 transition duration-300">
+            <div class="menu-hover transition duration-300">
+              <img src="https://coffee-static.storage.yandexcloud.net/files/shares/data/product/1746614170.9518-ethiopia-guji-nat-025-full.webp" 
+                   class="rounded-xl mb-4 w-full h-48 object-cover" 
+                   alt="Эспрессо">
+              <h3 class="text-xl font-semibold mb-2">Эспрессо моносорт</h3>
+              <p class="text-gray-600 mb-4">Сбалансированный, насыщенный с фруктовыми нотами — наш фирменный эспрессо из Кении.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-amber-900">350 ₽</span>
+                <button class="text-amber-900 hover:text-amber-700 add-to-cart">
+                  <i class="fas fa-plus-circle text-xl"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-item bg-white rounded-2xl shadow-md p-6 transition duration-300" data-aos="fade-up" data-aos-delay="100">
+            <div class="menu-hover transition duration-300">
+              <img src="https://www.pharmacosmetica.ru/files/pharmacosmetica/image/depositphotos_288388354_s.jpg" 
+                   class="rounded-xl mb-4 w-full h-48 object-cover" 
+                   alt="Латте">
+              <h3 class="text-xl font-semibold mb-2">Латте на овсяном</h3>
+              <p class="text-gray-600 mb-4">Нежный и кремовый, с идеально подобранным овсяным молоком для нашего эспрессо.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-amber-900">420 ₽</span>
+                <button class="text-amber-900 hover:text-amber-700 add-to-cart">
+                  <i class="fas fa-plus-circle text-xl"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-item bg-white rounded-2xl shadow-md p-6 transition duration-300" data-aos="fade-up" data-aos-delay="200">
+            <div class="menu-hover transition duration-300">
+              <img src="https://avatars.mds.yandex.net/get-mpic/5229883/img_id7276454927842328883.jpeg/orig" 
+                   class="rounded-xl mb-4 w-full h-48 object-cover" 
+                   alt="Пуровер">
+              <h3 class="text-xl font-semibold mb-2">Ручной пуровер</h3>
+              <p class="text-gray-600 mb-4">Выберите из сезонных сортов — приготовленный с точностью для чистоты вкуса.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-amber-900">450 ₽</span>
+                <button class="text-amber-900 hover:text-amber-700 add-to-cart">
+                  <i class="fas fa-plus-circle text-xl"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div data-aos="fade-up">
+        <h3 class="text-2xl font-semibold mb-6 coffee-drip">Выпечка и закуски</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="menu-item bg-white rounded-2xl shadow-md p-6 transition duration-300">
+            <div class="menu-hover transition duration-300">
+              <img src="https://tykva-cafe.ru/wp-content/uploads/2022/10/kruassan-klassicheskij.jpg" 
+                   class="rounded-xl mb-4 w-full h-48 object-cover" 
+                   alt="Круассан">
+              <h3 class="text-xl font-semibold mb-2">Круассан</h3>
+              <p class="text-gray-600 mb-4">Слоёное, маслянистое тесто, которое мы выпекаем ежедневно.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-amber-900">250 ₽</span>
+                <button class="text-amber-900 hover:text-amber-700 add-to-cart">
+                  <i class="fas fa-plus-circle text-xl"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-item bg-white rounded-2xl shadow-md p-6 transition duration-300" data-aos="fade-up" data-aos-delay="100">
+            <div class="menu-hover transition duration-300">
+              <img src="https://i.pinimg.com/736x/a6/17/85/a617852d0916d60f9fc91b0943e48cc8.jpg" 
+                   class="rounded-xl mb-4 w-full h-48 object-cover" 
+                   alt="Тост с авокадо">
+              <h3 class="text-xl font-semibold mb-2">Тост с авокадо</h3>
+              <p class="text-gray-600 mb-4">На закваске, с пюре из авокадо, хлопьями чили и микрогрином.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-amber-900">390 ₽</span>
+                <button class="text-amber-900 hover:text-amber-700 add-to-cart">
+                  <i class="fas fa-plus-circle text-xl"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-item bg-white rounded-2xl shadow-md p-6 transition duration-300" data-aos="fade-up" data-aos-delay="200">
+            <div class="menu-hover transition duration-300">
+              <img src="https://i.pinimg.com/736x/f7/9d/0c/f79d0cc5023411f5fe4ce50f8b196907.jpg" 
+                   class="rounded-xl mb-4 w-full h-48 object-cover" 
+                   alt="Гранола">
+              <h3 class="text-xl font-semibold mb-2">Гранола</h3>
+              <p class="text-gray-600 mb-4">Домашняя гранола с йогуртом и сезонным фруктовым компотом.</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-amber-900">350 ₽</span>
+                <button class="text-amber-900 hover:text-amber-700 add-to-cart">
+                  <i class="fas fa-plus-circle text-xl"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-20 bg-amber-800 text-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-12" data-aos="fade-up">
+        <span class="font-medium uppercase tracking-wider opacity-80">Отзывы</span>
+        <h2 class="text-4xl font-semibold mb-4 mt-2">Что говорят гости</h2>
+      </div>
+      <div class="glide">
+        <div class="glide__track" data-glide-el="track">
+          <div class="glide__slides">
+            <div class="glide__slide text-center px-8">
+              <div class="mb-6">
+                <div class="inline-flex space-x-1 text-amber-300">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+              <blockquote class="text-xl italic mb-8">
+                "Лучший пуровер, который я пробовал в городе. Бариста действительно знают своё дело и с удовольствием рассказывают о вкусовых нотах каждого сорта."
+              </blockquote>
+              <div class="flex items-center justify-center space-x-4">
+                <div class="text-left">
+                  <div class="font-semibold">Анна К.</div>
+                </div>
+              </div>
+            </div>
+            <div class="glide__slide text-center px-8">
+              <div class="mb-6">
+                <div class="inline-flex space-x-1 text-amber-300">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+              <blockquote class="text-xl italic mb-8">
+                "Я прихожу сюда за кофе, но остаюсь ради атмосферы. Это место стало моим вторым офисом, а персонал — почти семьёй."
+              </blockquote>
+              <div class="flex items-center justify-center space-x-4">
+                <div class="text-left">
+                  <div class="font-semibold">Дмитрий С.</div>
+                </div>
+              </div>
+            </div>
+            <div class="glide__slide text-center px-8">
+              <div class="mb-6">
+                <div class="inline-flex space-x-1 text-amber-300">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+              <blockquote class="text-xl italic mb-8">
+                "Их сезонные напитки всегда креативны, но без излишеств. Латте с кардамоном — моя текущая слабость."
+              </blockquote>
+              <div class="flex items-center justify-center space-x-4">
+                <div class="text-left">
+                  <div class="font-semibold">Елена М.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="glide__bullets mt-8 flex justify-center space-x-2" data-glide-el="controls[nav]">
+          <button class="glide__bullet w-3 h-3 rounded-full bg-white opacity-30" data-glide-dir="=0"></button>
+          <button class="glide__bullet w-3 h-3 rounded-full bg-white opacity-30" data-glide-dir="=1"></button>
+          <button class="glide__bullet w-3 h-3 rounded-full bg-white opacity-30" data-glide-dir="=2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brewing Process -->
+  <section id="process" class="py-32 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-amber-800 font-medium uppercase tracking-wider">Наш подход</span>
+        <h2 class="text-4xl font-semibold mb-4 mt-2">Искусство приготовления</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">От обжарки до ритуала — как мы создаём кофе, который запоминается.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-12">
+        <div class="text-center" data-aos="fade-up">
+          <div class="relative inline-block mb-6">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/b32b6446928871.586ad8baae6d0.jpg" 
+                 class="rounded-xl shadow-md w-full h-64 object-cover" 
+                 alt="Обжарка">
+            <div class="absolute -bottom-4 -right-4 bg-amber-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl">
+              <i class="fas fa-fire"></i>
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Точная обжарка</h3>
+          <p class="text-gray-600">Малые партии для раскрытия уникального вкуса каждого сорта.</p>
+        </div>
+        <div class="text-center" data-aos="fade-up" data-aos-delay="150">
+          <div class="relative inline-block mb-6">
+            <img src="https://coffee-static.storage.yandexcloud.net/files/shares/data/blog/1738334329.4226-main2-1024.webp" 
+                 class="rounded-xl shadow-md w-full h-64 object-cover" 
+                 alt="Приготовление">
+            <div class="absolute -bottom-4 -right-4 bg-amber-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl">
+              <i class="fas fa-mug-hot"></i>
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">С вниманием к деталям</h3>
+          <p class="text-gray-600">Каждая чашка готовится с заботой — пуровер, эспрессо, колд брю и другие методы.</p>
+        </div>
+        <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+          <div class="relative inline-block mb-6">
+            <img src="https://yandex-images.clstorage.net/D9F6U3q83/b19e91hC/2fVGytLMX1OJ5EmkoS19UDBC0E4u8Bnkh2WtB65IGXJoB6y6yWb8OaEkN5gabazCu6P16v5I4N-_iqEysoHoY7xhc16nSCq3-eQY4BGJvPDxQ4SP-sFNxRcl2JdrTo_laiCqTboReysDgMLon3i4Mw-S9glKHJOY6K0ER3AifsTpJufJYJ3sRVu0uTLQTd-AoPEmb_3zz4VgJ48AXv2OR9kD2p5L87uK4BIwyz-ZuyScIIXKrT_TacusN9cBwIwkCHdECeNfDER6Zskw8cwPg0EhNv1OUnxmgdRNYi6tnbe6Qxi96fHJCTDz02seq4ukr5M36ewtwbrILjcUUZGuRNjkt_qSP88FmBVZgUG8LhMiIdW9jEEMhMBlrZN9Lm8m-VJrP9uiSenT4BGqrjratnyRBIjNHJKL6GwnV8NjvsZYhVfbwV9uBPvle6Mx7j1woIPEDh4yHXSgNZ-QzG59N5ryC0_KA3u7cyNBWA14SVe8EpULrbyj6djd1TXiMT5lq8SEeJH-T0QrxSkxMx5fQtGxBm4OQS5m4jVP8z5OXkc6AJjO2jMLKvBQ0MkOGClUTeMWeh8fAZoqLIY3kWNclwsHdYoyriylKWVYcPANT1EgsvWMb-HOdEKkrYJdbh7ESuEZfCmC-Ylx8_DqLnqp9T5wtZmtP3JKC4zFNbATTqcrdSWI4r9v9gvHSODDj3yyMDI17cwzjJShh98iTd_ctipiWZ0ZAdsZAMHAek-KOVc-IXUI_J7iKhvcxtRzMI4GGUUH2VG9XnRqtogRcp5cgvDQ1kzuEm1FQ-Wv0-__bjWpMSjcedLpKVOB0gg8CGjGvCD3S41-0DpqHuRGE-BeR6pkFhnDTC9lmfaLgjGcLeBg8acNb9OthCCl_zKe3i5V6pP6v1txyPgBADAqTAqLd_yBNLpvbRIKKXzmRnHgPgUJxmaqovxspunWa6NB7n1zUuMGLq2DjgbyNZxCzU-OI" 
+                 class="rounded-xl shadow-md w-full h-64 object-cover" 
+                 alt="Обслуживание">
+            <div class="absolute -bottom-4 -right-4 bg-amber-800 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl">
+              <i class="fas fa-heart"></i>
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Создаём общение</h3>
+          <p class="text-gray-600">Уютные пространства и дружелюбная атмосфера — кофе как повод для встречи.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit Us -->
+  <section id="visit" class="py-32 px-6 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div data-aos="fade-right">
+          <span class="text-amber-800 font-medium uppercase tracking-wider">Контакты</span>
+          <h2 class="text-4xl font-semibold mb-6 mt-2">Приходите к нам</h2>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-map-marker-alt text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Адрес</h4>
+                <p class="text-gray-600">ул. Кофейная, 56, Москва</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-clock text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Часы работы</h4>
+                <p class="text-gray-600">Пн-Пт: 8:00 - 20:00</p>
+                <p class="text-gray-600">Сб-Вс: 9:00 - 19:00</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-phone-alt text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Контакты</h4>
+                <p class="text-gray-600">+7 (495) 123-45-67</p>
+                <p class="text-gray-600">hello@kaffe.ru</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 flex space-x-4">
+            <a href="#" class="bg-amber-800 hover:bg-amber-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+              <i class="fab fa-vk"></i>
+            </a>
+            <a href="#" class="bg-amber-800 hover:bg-amber-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+              <i class="fab fa-telegram"></i>
+            </a>
+          </div>
+        </div>
+        <div class="rounded-2xl overflow-hidden shadow-xl" data-aos="fade-left">
+          <div class="h-96 w-full">
+            <iframe class="w-full h-full" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.3727893796033!2d37.61763331593076!3d55.75202398055303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5a738fa419%3A0x7c347d506f52311f!2z0JrQvtC80YHQutC-0Lkg0L_RgNC-0YHQvy4sIDU2LCDQnNC-0YHQutCy0LAsINCg0L7RgdGB0LjRjywgMTAxMDAw!5e0!3m2!1sru!2sru!4v1620000000000!5m2!1sru!2sru" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-amber-900 text-white py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Kaffé</h3>
+          <p class="text-amber-200">Авторский кофе с душой — местной обжарки, отборных сортов, идеального приготовления.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Навигация</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-amber-200 hover:text-white transition">О нас</a></li>
+            <li><a href="#menu" class="text-amber-200 hover:text-white transition">Меню</a></li>
+            <li><a href="#process" class="text-amber-200 hover:text-white transition">Процесс</a></li>
+            <li><a href="#visit" class="text-amber-200 hover:text-white transition">Контакты</a></li>
+            <li><a href="promotions.html" class="text-amber-200 hover:text-white transition">Акции</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Контакты</h4>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">ул. Кофейная, 56, Москва</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-phone-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">+7 (495) 123-45-67</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-envelope mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">hello@kaffe.ru</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Рассылка</h4>
+          <p class="text-amber-200 mb-4">Подпишитесь на обновления и специальные предложения.</p>
+          <form class="flex">
+            <input type="email" 
+                   placeholder="Ваш email" 
+                   class="px-4 py-2 rounded-l-lg text-gray-900 focus:outline-none w-full">
+            <button type="submit" 
+                    class="bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-r-lg transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-amber-800 mt-12 pt-8 text-center text-sm text-amber-300">
+        <p>&copy; 2025 Kaffé. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Корзина -->
+<div id="cartOverlay" class="fixed inset-0 bg-black/50 z-50 hidden">
+  <div class="absolute right-0 top-0 h-full w-full sm:w-96 bg-white shadow-xl flex flex-col">
+    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+      <h3 class="text-xl font-bold">Ваша корзина</h3>
+      <button id="closeCart" class="text-2xl text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div id="cartItems" class="flex-grow overflow-y-auto p-6">
+      <!-- Товары будут добавляться сюда -->
+      <div id="emptyCart" class="text-center py-12">
+        <i class="fas fa-shopping-basket text-4xl text-gray-300 mb-4"></i>
+        <p class="text-gray-500">Ваша корзина пуста</p>
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-200 p-6">
+      <div class="flex justify-between mb-2">
+        <span>Сумма:</span>
+        <span id="cartSubtotal">0 ₽</span>
+      </div>
+      <div class="flex justify-between mb-4">
+        <span>Доставка:</span>
+        <span id="cartDelivery">0 ₽</span>
+      </div>
+      <div class="flex justify-between font-bold text-lg">
+        <span>Итого:</span>
+        <span id="cartTotal">0 ₽</span>
+      </div>
+      <button id="checkoutBtn" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg mt-6 disabled:opacity-50" disabled>
+        Оформить заказ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Иконка корзины в шапке -->
+<div id="cartIcon" class="fixed top-4 right-20 z-40 bg-amber-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer">
+  <i class="fas fa-shopping-basket"></i>
+  <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+</div>
+
+<!-- Форма оформления заказа -->
+<div id="checkoutModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+      <h3 class="text-xl font-bold">Оформление заказа</h3>
+      <button id="closeCheckout" class="text-2xl text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <form id="checkoutForm" class="p-6">
+      <div class="mb-6">
+        <h4 class="font-semibold mb-4">Контактные данные</h4>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Имя*</label>
+            <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Телефон*</label>
+            <input type="tel" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="+7 (___) ___-__-__">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Email</label>
+            <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <h4 class="font-semibold mb-4">Способ получения</h4>
+        <div class="space-y-2 mb-4">
+          <label class="flex items-center space-x-3">
+            <input type="radio" name="deliveryMethod" value="pickup" checked class="text-amber-600 focus:ring-amber-500">
+            <span>Самовывоз</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="radio" name="deliveryMethod" value="delivery" class="text-amber-600 focus:ring-amber-500">
+            <span>Доставка</span>
+          </label>
+        </div>
+      
+        <!-- Блок самовывоза -->
+        <div id="pickupDetails" class="bg-gray-50 p-4 rounded-lg">
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Выберите кофейню</label>
+            <select name="pickupLocation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+              <option value="coffee_spot1">ул. Кофейная, 56</option>
+              <option value="coffee_spot2">пр. Ароматный, 12</option>
+              <option value="coffee_spot3">пер. Бобовый, 3</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Дата и время самовывоза</label>
+            <input type="datetime-local" name="pickupDateTime" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+        </div>
+      
+        <!-- Блок доставки (изначально скрыт) -->
+        <div id="deliveryDetails" class="bg-gray-50 p-4 rounded-lg hidden">
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Адрес доставки*</label>
+            <input type="text" name="address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Дата доставки*</label>
+            <input type="date" name="deliveryDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Время доставки*</label>
+            <select name="deliveryTime" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+              <option value="">Выберите время</option>
+              <option value="10:00-12:00">10:00 - 12:00</option>
+              <option value="12:00-14:00">12:00 - 14:00</option>
+              <option value="14:00-16:00">14:00 - 16:00</option>
+              <option value="16:00-18:00">16:00 - 18:00</option>
+              <option value="18:00-20:00">18:00 - 20:00</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Комментарий</label>
+            <textarea name="comment" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <h4 class="font-semibold mb-4">Оплата</h4>
+        <div class="space-y-2">
+          <label class="flex items-center space-x-3">
+            <input type="radio" name="payment" value="cash" checked class="text-amber-600 focus:ring-amber-500">
+            <span>Наличными при получении</span>
+          </label>
+          <label class="flex items-center space-x-3">
+            <input type="radio" name="payment" value="card" class="text-amber-600 focus:ring-amber-500">
+            <span>Картой онлайн</span>
+          </label>
+        </div>
+        
+        <!-- Форма оплаты картой -->
+        <div id="paymentFormContainer" class="payment-form-container">
+          <div class="credit-card-form">
+            <div class="card-icons">
+              <img src="https://belparking.ru/static-files/scrin/MP_Gorparkovki/visa.png" class="card-icon" alt="Visa">
+              <img src="https://brandlogos.net/wp-content/uploads/2011/08/mastercard-logo.png" class="card-icon" alt="Mastercard">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Mir-logo.SVG.svg/2560px-Mir-logo.SVG.svg.png" class="card-icon" alt="Apple Pay">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" class="card-icon" alt="Google Pay">
+            </div>
+            
+            <div class="form-group">
+              <label for="cardNumber">Номер карты</label>
+              <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" class="card-number">
+            </div>
+            
+            <div class="card-row">
+              <div class="form-group">
+                <label for="cardExpiry">Срок действия</label>
+                <input type="text" id="cardExpiry" placeholder="MM/ГГ" maxlength="5" class="card-expiry">
+              </div>
+              <div class="form-group">
+                <label for="cardCvc">CVC/CVV</label>
+                <input type="text" id="cardCvc" placeholder="123" maxlength="3" class="card-cvc">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="cardName">Имя на карте</label>
+              <input type="text" id="cardName" placeholder="IVAN IVANOV" class="card-name">
+            </div>
+            
+            <button type="button" id="payButton" class="pay-button" disabled>
+              Оплатить <span id="totalAmount">0</span> ₽
+            </button>
+            
+            <div id="paymentProcessing" class="payment-processing">
+              <div class="animate-spin inline-block w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full mb-2"></div>
+              <p>Обработка платежа...</p>
+            </div>
+            
+            <div id="paymentSuccess" class="payment-success">
+              <i class="fas fa-check-circle text-4xl mb-2"></i>
+              <p>Оплата прошла успешно!</p>
+            </div>
+            
+            <div id="paymentError" class="payment-error">
+              <i class="fas fa-exclamation-circle mr-1"></i>
+              <span>Ошибка оплаты. Пожалуйста, проверьте данные карты.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-200 pt-4">
+        <div class="flex justify-between mb-2">
+          <span>Товары:</span>
+          <span id="checkoutSubtotal">0 ₽</span>
+        </div>
+        <div class="flex justify-between mb-2">
+          <span>Доставка:</span>
+          <span id="checkoutDelivery">0 ₽</span>
+        </div>
+        <div class="flex justify-between font-bold text-lg mb-4">
+          <span>Итого:</span>
+          <span id="checkoutTotal">0 ₽</span>
+        </div>
+        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg">
+          Подтвердить заказ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Уведомление о добавлении в корзину -->
+<div id="cartNotification" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-amber-800 text-white px-6 py-3 rounded-full shadow-xl flex items-center space-x-2 hidden z-50">
+  <i class="fas fa-check"></i>
+  <span>Товар добавлен в корзину</span>
+</div>
+
+<!-- Подтверждение заказа -->
+<div id="orderSuccess" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl max-w-md w-full p-8 text-center">
+    <div class="text-green-500 text-5xl mb-4">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h3 class="text-2xl font-bold mb-2">Заказ оформлен!</h3>
+    <p class="text-gray-600 mb-6">Ваш заказ #<span id="orderNumber">12345</span> успешно оформлен.</p>
+    <p class="text-gray-600 mb-6">Мы свяжемся с вами для подтверждения заказа.</p>
+    <button id="closeSuccess" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg">
+      Понятно
+    </button>
+  </div>
+</div>
+
+<!-- Модальное окно входа/регистрации -->
+<div id="authModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+      <h3 class="text-xl font-bold">Вход / Регистрация</h3>
+      <button id="closeAuth" class="text-2xl text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="p-6">
+      <div class="auth-tabs mb-6">
+        <div class="auth-tab active" data-tab="login">Вход</div>
+        <div class="auth-tab" data-tab="register">Регистрация</div>
+      </div>
+      
+      <form id="loginForm" class="auth-form active">
+        <div class="mb-4">
+          <label class="block text-sm text-gray-600 mb-1">Email</label>
+          <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm text-gray-600 mb-1">Пароль</label>
+          <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+        </div>
+        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg mb-4">
+          Войти
+        </button>
+        <div class="text-center text-sm text-gray-500">
+          <a href="#" class="text-amber-800 hover:underline">Забыли пароль?</a>
+        </div>
+      </form>
+      
+      <form id="registerForm" class="auth-form">
+        <div class="mb-4">
+          <label class="block text-sm text-gray-600 mb-1">Имя</label>
+          <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm text-gray-600 mb-1">Email</label>
+          <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm text-gray-600 mb-1">Телефон</label>
+          <input type="tel" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="+7 (___) ___-__-__">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm text-gray-600 mb-1">Пароль</label>
+          <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm text-gray-600 mb-1">Подтвердите пароль</label>
+          <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+        </div>
+        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg">
+          Зарегистрироваться
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Личный кабинет -->
+<div id="accountModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+      <h3 class="text-xl font-bold">Личный кабинет</h3>
+      <div class="flex items-center space-x-4">
+        <button id="logoutBtn" class="text-sm text-amber-800 hover:text-amber-700">
+          Выйти
+        </button>
+        <button id="closeAccount" class="text-2xl text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="p-6">
+      <div class="flex items-center space-x-4 mb-6">
+        <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-2xl text-amber-800">
+          <i class="fas fa-user"></i>
+        </div>
+        <div>
+          <h4 class="font-semibold" id="accountName">Гость</h4>
+          <p class="text-sm text-gray-500" id="accountEmail">Не авторизован</p>
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold mb-4">Контактная информация</h4>
+          <div class="space-y-3">
+            <div>
+              <p class="text-sm text-gray-500">Телефон</p>
+              <p id="accountPhone">Не указан</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Адрес</p>
+              <p id="accountAddress">Не указан</p>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Статистика</h4>
+          <div class="space-y-3">
+            <div>
+              <p class="text-sm text-gray-500">Всего заказов</p>
+              <p id="totalOrders">0</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Последний заказ</p>
+              <p id="lastOrderDate">Нет данных</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <h4 class="font-semibold mb-4">История заказов</h4>
+        <div id="orderHistory" class="space-y-4">
+          <!-- Заказы будут добавляться сюда -->
+          <div class="text-center py-8 text-gray-500">
+            <i class="fas fa-box-open text-3xl mb-2"></i>
+            <p>У вас пока нет заказов</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Отслеживание заказа -->
+<div id="trackOrderModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl max-w-md w-full p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-bold">Отследить заказ</h3>
+      <button id="closeTrackOrder" class="text-2xl text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="mb-6">
+      <label class="block text-sm text-gray-600 mb-1">Номер заказа</label>
+      <input type="text" id="orderNumberInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Введите номер заказа">
+    </div>
+    
+    <button id="trackOrderBtn" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg mb-4">
+      Отследить
+    </button>
+    
+    <div id="orderStatusInfo" class="hidden">
+      <div class="border-t border-gray-200 pt-4 mt-4">
+        <h4 class="font-semibold mb-4">Статус заказа #<span id="trackedOrderNumber">12345</span></h4>
+        
+        <div class="relative">
+          <!-- Линия прогресса -->
+          <div class="absolute left-4 top-0 h-full w-0.5 bg-gray-200"></div>
+          
+          <!-- Шаги статуса -->
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4 relative">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white z-10">
+                <i class="fas fa-check"></i>
+              </div>
+              <div>
+                <p class="font-medium">Заказ подтверждён</p>
+                <p class="text-sm text-gray-500">Сегодня, 10:30</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4 relative">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white z-10">
+                <i class="fas fa-check"></i>
+              </div>
+              <div>
+                <p class="font-medium">Готовится</p>
+                <p class="text-sm text-gray-500">Сегодня, 11:15</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4 relative">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white z-10">
+                <i class="fas fa-truck"></i>
+              </div>
+              <div>
+                <p class="font-medium">Передан курьеру</p>
+                <p class="text-sm text-gray-500">Сегодня, 12:30</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4 relative">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 z-10">
+                <i class="fas fa-home"></i>
+              </div>
+              <div>
+                <p class="text-gray-400">Доставка</p>
+                <p class="text-sm text-gray-400">Ожидается</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6">
+          <p class="text-sm text-gray-600">Курьер: <span class="font-medium">Иванов Алексей</span></p>
+          <p class="text-sm text-gray-600">Телефон: <span class="font-medium">+7 (900) 123-45-67</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Иконка личного кабинета в шапке -->
+<div id="accountIcon" class="fixed top-4 right-4 z-40 bg-gray-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer">
+  <i class="fas fa-user"></i>
+</div>
+
+<!-- Кнопка отслеживания заказа -->
+<div id="trackOrderBtnFixed" class="fixed bottom-6 left-4 z-40 bg-amber-800 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl cursor-pointer z-40">
+  <i class="fas fa-truck"></i>
+</div>
+
+<!-- Back to Top Button -->
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-amber-800 text-white w-12 h-12 rounded-full shadow-xl flex items-center justify-center opacity-0 invisible transition-all duration-300 z-40">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-8 opacity-0 invisible transition-opacity duration-300">
+    <button id="closeLightbox" class="absolute top-8 right-8 text-white text-4xl">
+      <i class="fas fa-times"></i>
+    </button>
+    <img id="lightboxImage" src="" alt="" class="max-w-full max-h-full">
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+
+    // Mobile menu toggle
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    openMenu.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+        backToTop.classList.add('opacity-100', 'visible');
+      } else {
+        backToTop.classList.remove('opacity-100', 'visible');
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Testimonials slider
+    new Glide('.glide', {
+      type: 'carousel',
+      perView: 1,
+      autoplay: 5000,
+      hoverpause: true,
+      gap: 40,
+      animationDuration: 800
+    }).mount();
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+
+    // Hero image parallax effect
+    const heroImage = document.getElementById('heroImage');
+    
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.pageYOffset;
+      heroImage.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+    });
+
+    // Menu item hover effects
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+      const hoverElement = item.querySelector('.menu-hover');
+      
+      item.addEventListener('mouseenter', () => {
+        hoverElement.style.transform = 'translateY(-10px)';
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        hoverElement.style.transform = '';
+      });
+    });
+
+    // Корзина
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartIcon = document.getElementById('cartIcon');
+    const cartCount = document.getElementById('cartCount');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const closeCart = document.getElementById('closeCart');
+    const cartItems = document.getElementById('cartItems');
+    const emptyCart = document.getElementById('emptyCart');
+    const cartSubtotal = document.getElementById('cartSubtotal');
+    const cartDelivery = document.getElementById('cartDelivery');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const cartNotification = document.getElementById('cartNotification');
+    const checkoutModal = document.getElementById('checkoutModal');
+    const closeCheckout = document.getElementById('closeCheckout');
+    const checkoutForm = document.getElementById('checkoutForm');
+    const orderSuccess = document.getElementById('orderSuccess');
+    const closeSuccess = document.getElementById('closeSuccess');
+    const checkoutSubtotal = document.getElementById('checkoutSubtotal');
+    const checkoutDelivery = document.getElementById('checkoutDelivery');
+    const checkoutTotal = document.getElementById('checkoutTotal');
+    const orderNumber = document.getElementById('orderNumber');
+
+    // Форма оплаты
+    const paymentFormContainer = document.getElementById('paymentFormContainer');
+    const paymentMethodRadios = document.querySelectorAll('input[name="payment"]');
+    const payButton = document.getElementById('payButton');
+    const paymentProcessing = document.getElementById('paymentProcessing');
+    const paymentSuccess = document.getElementById('paymentSuccess');
+    const paymentError = document.getElementById('paymentError');
+    const totalAmountSpan = document.getElementById('totalAmount');
+    
+    // Форматирование номера карты
+    const cardNumberInput = document.getElementById('cardNumber');
+    cardNumberInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let matches = value.match(/\d{4,16}/g);
+      let match = matches && matches[0] || '';
+      let parts = [];
+      
+      for (let i=0, len=match.length; i<len; i+=4) {
+        parts.push(match.substring(i, i+4));
+      }
+      
+      if (parts.length) {
+        e.target.value = parts.join(' ');
+      } else {
+        e.target.value = value;
+      }
+      
+      validatePaymentForm();
+    });
+    
+    // Форматирование срока действия карты
+    const cardExpiryInput = document.getElementById('cardExpiry');
+    cardExpiryInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/[^0-9]/g, '');
+      
+      if (value.length > 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      
+      e.target.value = value;
+      validatePaymentForm();
+    });
+    
+    // Форматирование CVC/CVV
+    const cardCvcInput = document.getElementById('cardCvc');
+    cardCvcInput.addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      validatePaymentForm();
+    });
+    
+    // Имя на карте
+    const cardNameInput = document.getElementById('cardName');
+    cardNameInput.addEventListener('input', function(e) {
+      validatePaymentForm();
+    });
+    
+    // Валидация формы оплаты
+    function validatePaymentForm() {
+      const cardNumber = cardNumberInput.value.replace(/\s/g, '');
+      const cardExpiry = cardExpiryInput.value;
+      const cardCvc = cardCvcInput.value;
+      const cardName = cardNameInput.value;
+      
+      // Простая валидация номера карты (должен быть 16 цифр)
+      const isCardValid = cardNumber.length === 16 && /^\d+$/.test(cardNumber);
+      
+      // Валидация срока действия (MM/YY)
+      const isExpiryValid = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(cardExpiry);
+      
+      // Валидация CVC (3 цифры)
+      const isCvcValid = cardCvc.length === 3 && /^\d+$/.test(cardCvc);
+      
+      // Валидация имени (не пустое)
+      const isNameValid = cardName.trim().length > 0;
+      
+      // Активируем кнопку, если все поля валидны
+      payButton.disabled = !(isCardValid && isExpiryValid && isCvcValid && isNameValid);
+      
+      return isCardValid && isExpiryValid && isCvcValid && isNameValid;
+    }
+    
+    // Обработка выбора способа оплаты
+    paymentMethodRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        if (this.value === 'card') {
+          paymentFormContainer.classList.add('active');
+          totalAmountSpan.textContent = checkoutTotal.textContent.replace(/\D/g, '');
+        } else {
+          paymentFormContainer.classList.remove('active');
+        }
+      });
+    });
+    
+    // Обработка нажатия кнопки оплаты
+    payButton.addEventListener('click', function() {
+      if (!validatePaymentForm()) return;
+      
+      // Показываем индикатор загрузки
+      paymentProcessing.classList.add('active');
+      payButton.disabled = true;
+      paymentError.classList.remove('active');
+      
+      // Имитация процесса оплаты (в реальном приложении здесь будет запрос к платежному шлюзу)
+      setTimeout(() => {
+        // С вероятностью 80% успешная оплата, 20% ошибка (для демонстрации)
+        const isSuccess = Math.random() < 0.8;
+        
+        if (isSuccess) {
+          paymentProcessing.classList.remove('active');
+          paymentSuccess.classList.add('active');
+          
+          // Через 2 секунды скрываем успешное сообщение
+          setTimeout(() => {
+            paymentSuccess.classList.remove('active');
+            payButton.disabled = false;
+          }, 2000);
+        } else {
+          paymentProcessing.classList.remove('active');
+          paymentError.classList.add('active');
+          payButton.disabled = false;
+        }
+      }, 2000);
+    });
+
+    // Функции для работы с корзиной
+    function updateCart() {
+      // Сохраняем корзину в localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Обновляем счетчик в иконке корзины
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+      totalItems > 0 ? cartCount.classList.remove('hidden') : cartCount.classList.add('hidden');
+      
+      // Обновляем содержимое корзины
+      if (cart.length === 0) {
+        emptyCart.classList.remove('hidden');
+        cartItems.innerHTML = '';
+        checkoutBtn.disabled = true;
+      } else {
+        emptyCart.classList.add('hidden');
+        renderCartItems();
+        checkoutBtn.disabled = false;
+      }
+      
+      // Обновляем суммы
+      calculateTotals();
+    }
+
+    function renderCartItems() {
+      cartItems.innerHTML = '';
+      
+      cart.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item flex items-start py-4 border-b border-gray-100';
+        itemElement.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-4">
+          <div class="flex-grow">
+            <h4 class="font-medium">${item.name}</h4>
+            <p class="text-sm text-gray-500">${item.description}</p>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center space-x-2">
+                <button class="quantity-btn decrease" data-index="${index}">
+                  <i class="fas fa-minus text-xs"></i>
+                </button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="quantity-btn increase" data-index="${index}">
+                  <i class="fas fa-plus text-xs"></i>
+                </button>
+              </div>
+              <span class="font-medium">${(item.price * item.quantity).toLocaleString()} ₽</span>
+            </div>
+          </div>
+          <button class="cart-item-remove text-gray-400 hover:text-red-500 ml-4" data-index="${index}">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        cartItems.appendChild(itemElement);
+      });
+      
+      // Добавляем обработчики событий для новых элементов
+      document.querySelectorAll('.decrease').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = e.currentTarget.getAttribute('data-index');
+          decreaseQuantity(index);
+        });
+      });
+      
+      document.querySelectorAll('.increase').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = e.currentTarget.getAttribute('data-index');
+          increaseQuantity(index);
+        });
+      });
+      
+      document.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = e.currentTarget.getAttribute('data-index');
+          removeFromCart(index);
+        });
+      });
+    }
+
+    // Обработка выбора способа получения
+const deliveryMethodRadios = document.querySelectorAll('input[name="deliveryMethod"]');
+const pickupDetails = document.getElementById('pickupDetails');
+const deliveryDetails = document.getElementById('deliveryDetails');
+
+deliveryMethodRadios.forEach(radio => {
+  radio.addEventListener('change', function() {
+    if (this.value === 'delivery') {
+      pickupDetails.classList.add('hidden');
+      deliveryDetails.classList.remove('hidden');
+    } else {
+      deliveryDetails.classList.add('hidden');
+      pickupDetails.classList.remove('hidden');
+    }
+  });
+});
+
+// Установка минимальной даты/времени для самовывоза
+const pickupDateTimeInput = document.querySelector('input[name="pickupDateTime"]');
+const now = new Date();
+const minDateTime = new Date(now.getTime() + 60 * 60 * 1000); // Минимум через 1 час
+pickupDateTimeInput.min = minDateTime.toISOString().slice(0, 16);
+
+    function calculateTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const delivery = subtotal > 2000 ? 0 : 300; // Бесплатная доставка от 2000 ₽
+      const total = subtotal + delivery;
+      
+      cartSubtotal.textContent = subtotal.toLocaleString() + ' ₽';
+      cartDelivery.textContent = delivery.toLocaleString() + ' ₽';
+      cartTotal.textContent = total.toLocaleString() + ' ₽';
+      
+      checkoutSubtotal.textContent = subtotal.toLocaleString() + ' ₽';
+      checkoutDelivery.textContent = delivery.toLocaleString() + ' ₽';
+      checkoutTotal.textContent = total.toLocaleString() + ' ₽';
+      
+      // Обновляем сумму в форме оплаты
+      if (totalAmountSpan) {
+        totalAmountSpan.textContent = total.toLocaleString();
+      }
+    }
+
+    function addToCart(item) {
+      // Проверяем, есть ли уже такой товар в корзине
+      const existingItem = cart.find(cartItem => cartItem.name === item.name);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({...item, quantity: 1});
+      }
+      
+      updateCart();
+      showNotification();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function increaseQuantity(index) {
+      cart[index].quantity += 1;
+      updateCart();
+    }
+
+    function decreaseQuantity(index) {
+      if (cart[index].quantity > 1) {
+        cart[index].quantity -= 1;
+      } else {
+        removeFromCart(index);
+      }
+      updateCart();
+    }
+
+    function showNotification() {
+      cartNotification.classList.remove('hidden');
+      setTimeout(() => {
+        cartNotification.classList.add('hidden');
+      }, 3000);
+    }
+
+    function generateOrderNumber() {
+      const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+      const numbers = '0123456789';
+      let result = '';
+      
+      // 2 буквы
+      for (let i = 0; i < 2; i++) {
+        result += letters.charAt(Math.floor(Math.random() * letters.length));
+      }
+      
+      // 6 цифр
+      for (let i = 0; i < 6; i++) {
+        result += numbers.charAt(Math.floor(Math.random() * numbers.length));
+      }
+      
+      return result;
+    }
+
+    // Обработчики событий
+    document.querySelectorAll('.menu-item button').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const menuItem = e.currentTarget.closest('.menu-item');
+        const item = {
+          name: menuItem.querySelector('h3').textContent,
+          description: menuItem.querySelector('p').textContent,
+          price: parseInt(menuItem.querySelector('span').textContent.replace(/\D/g, '')),
+          image: menuItem.querySelector('img').src
+        };
+        addToCart(item);
+      });
+    });
+
+    cartIcon.addEventListener('click', () => {
+      cartOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeCart.addEventListener('click', () => {
+      cartOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      cartOverlay.classList.add('hidden');
+      checkoutModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeCheckout.addEventListener('click', () => {
+      checkoutModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    closeSuccess.addEventListener('click', () => {
+      orderSuccess.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    // Маска для телефона
+    const phoneInput = document.querySelector('input[type="tel"]');
+    phoneInput.addEventListener('input', (e) => {
+      const x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + (x[3] ? ') ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+    });
+
+    // Установка минимальной даты доставки (сегодня + 1 день)
+    const deliveryDateInput = document.querySelector('input[name="deliveryDate"]');
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    deliveryDateInput.min = tomorrow.toISOString().split('T')[0];
+
+    // Личный кабинет и отслеживание заказов
+    const accountIcon = document.getElementById('accountIcon');
+    const accountModal = document.getElementById('accountModal');
+    const closeAccount = document.getElementById('closeAccount');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const trackOrderBtnFixed = document.getElementById('trackOrderBtnFixed');
+    const trackOrderModal = document.getElementById('trackOrderModal');
+    const closeTrackOrder = document.getElementById('closeTrackOrder');
+    const trackOrderBtn = document.getElementById('trackOrderBtn');
+    const orderNumberInput = document.getElementById('orderNumberInput');
+    const orderStatusInfo = document.getElementById('orderStatusInfo');
+
+    // Модальное окно входа/регистрации
+    const authModal = document.getElementById('authModal');
+    const closeAuth = document.getElementById('closeAuth');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const authForms = document.querySelectorAll('.auth-form');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    // Данные пользователей и заказов
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+    // Переключение между вкладками входа и регистрации
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+        
+        // Убираем активный класс у всех вкладок и форм
+        authTabs.forEach(t => t.classList.remove('active'));
+        authForms.forEach(f => f.classList.remove('active'));
+        
+        // Добавляем активный класс текущей вкладке и форме
+        tab.classList.add('active');
+        document.getElementById(`${tabName}Form`).classList.add('active');
+      });
+    });
+
+    // Функции для работы с пользователями и заказами
+    function updateAccountInfo() {
+      if (currentUser) {
+        document.getElementById('accountName').textContent = currentUser.name || 'Гость';
+        document.getElementById('accountEmail').textContent = currentUser.email || 'Не указан';
+        document.getElementById('accountPhone').textContent = currentUser.phone || 'Не указан';
+        document.getElementById('accountAddress').textContent = currentUser.address || 'Не указан';
+        
+        // Получаем заказы только текущего пользователя
+        const userOrders = orders.filter(order => order.userId === currentUser.id);
+        
+        // Обновляем статистику
+        document.getElementById('totalOrders').textContent = userOrders.length;
+        if (userOrders.length > 0) {
+          const lastOrder = userOrders[0];
+          document.getElementById('lastOrderDate').textContent = new Date(lastOrder.date).toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          });
+        } else {
+          document.getElementById('lastOrderDate').textContent = 'Нет данных';
+        }
+        
+        // Обновляем историю заказов
+        renderOrderHistory(userOrders);
+      } else {
+        // Если пользователь не авторизован
+        document.getElementById('accountName').textContent = 'Гость';
+        document.getElementById('accountEmail').textContent = 'Не авторизован';
+        document.getElementById('accountPhone').textContent = 'Не авторизован';
+        document.getElementById('accountAddress').textContent = 'Не авторизован';
+        document.getElementById('totalOrders').textContent = '0';
+        document.getElementById('lastOrderDate').textContent = 'Нет данных';
+        
+        const orderHistory = document.getElementById('orderHistory');
+        orderHistory.innerHTML = `
+          <div class="text-center py-8">
+            <p class="mb-4">Для просмотра истории заказов необходимо авторизоваться</p>
+            <button id="loginBtn" class="bg-amber-800 hover:bg-amber-700 text-white px-6 py-2 rounded-lg">
+              Войти
+            </button>
+          </div>
+        `;
+        
+        document.getElementById('loginBtn').addEventListener('click', () => {
+          accountModal.classList.add('hidden');
+          authModal.classList.remove('hidden');
+        });
+      }
+    }
+
+    function renderOrderHistory(userOrders) {
+      const orderHistory = document.getElementById('orderHistory');
+      
+      if (userOrders.length === 0) {
+        orderHistory.innerHTML = `
+          <div class="text-center py-8 text-gray-500">
+            <i class="fas fa-box-open text-3xl mb-2"></i>
+            <p>У вас пока нет заказов</p>
+          </div>
+        `;
+        return;
+      }
+      
+      orderHistory.innerHTML = '';
+      
+      userOrders.forEach(order => {
+        const totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0);
+        
+        const orderElement = document.createElement('div');
+        orderElement.className = 'order-card p-4 cursor-pointer';
+        orderElement.innerHTML = `
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <p class="font-medium">Заказ #${order.number}</p>
+              <p class="text-sm text-gray-500">${new Date(order.date).toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}</p>
+            </div>
+            <span class="order-status ${getStatusClass(order.status)}">
+              ${getStatusText(order.status)}
+            </span>
+          </div>
+          
+          <div class="mb-3">
+            ${order.items.map(item => `
+              <div class="flex justify-between text-sm py-1 border-b border-gray-100 last:border-0">
+                <span>${item.name} × ${item.quantity}</span>
+                <span>${(item.price * item.quantity).toLocaleString()} ₽</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="flex justify-between font-medium border-t border-gray-200 pt-2">
+            <span>Итого (${totalItems} ${pluralize(totalItems, ['товар', 'товара', 'товаров'])}):</span>
+            <span>${order.total.toLocaleString()} ₽</span>
+          </div>
+        `;
+        
+        orderElement.addEventListener('click', () => {
+          showOrderDetails(order);
+        });
+        
+        orderHistory.appendChild(orderElement);
+      });
+    }
+
+    function showOrderDetails(order) {
+      const totalItems = order.items.reduce((sum, item) => sum + item.quantity, 0);
+      
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4';
+      modal.innerHTML = `
+        <div class="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+          <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+            <h3 class="text-xl font-bold">Заказ #${order.number}</h3>
+            <button class="close-order-details text-2xl text-gray-500 hover:text-gray-700">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <div class="p-6">
+            <div class="mb-6">
+              <h4 class="font-semibold mb-3">Информация о заказе</h4>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Дата:</span>
+                  <span>${new Date(order.date).toLocaleString('ru-RU')}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Статус:</span>
+                  <span class="order-status ${getStatusClass(order.status)}">
+                    ${getStatusText(order.status)}
+                  </span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Способ оплаты:</span>
+                  <span>${order.payment === 'cash' ? 'Наличными' : 'Картой онлайн'}</span>
+                </div>
+                ${order.statusUpdated ? `
+                  <div class="flex justify-between">
+                    <span class="text-gray-500">Статус обновлён:</span>
+                    <span>${new Date(order.statusUpdated).toLocaleString('ru-RU')}</span>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <h4 class="font-semibold mb-3">Состав заказа</h4>
+              <div class="space-y-3">
+                ${order.items.map(item => `
+                  <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                    <div>
+                      <p class="font-medium">${item.name}</p>
+                      <p class="text-sm text-gray-500">${item.description || ''}</p>
+                    </div>
+                    <div class="text-right">
+                      <p>${item.quantity} × ${item.price.toLocaleString()} ₽</p>
+                      <p class="font-medium">${(item.price * item.quantity).toLocaleString()} ₽</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <h4 class="font-semibold mb-3">Доставка</h4>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Адрес:</span>
+                  <span>${order.address}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Дата доставки:</span>
+                  <span>${order.deliveryDate} ${order.deliveryTime}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Комментарий:</span>
+                  <span>${order.comment || 'Нет комментария'}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4">
+              <div class="flex justify-between mb-1">
+                <span>Товары (${totalItems}):</span>
+                <span>${order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString()} ₽</span>
+              </div>
+              <div class="flex justify-between mb-1">
+                <span>Доставка:</span>
+                <span>${order.total - order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString()} ₽</span>
+              </div>
+              <div class="flex justify-between font-bold text-lg mt-3">
+                <span>Итого:</span>
+                <span>${order.total.toLocaleString()} ₽</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      modal.querySelector('.close-order-details').addEventListener('click', () => {
+        document.body.removeChild(modal);
+      });
+    }
+
+    function getStatusClass(status) {
+      switch(status) {
+        case 'processing': return 'status-processing';
+        case 'shipping': return 'status-shipping';
+        case 'delivered': return 'status-delivered';
+        case 'cancelled': return 'status-cancelled';
+        default: return '';
+      }
+    }
+
+    function getStatusText(status) {
+      switch(status) {
+        case 'processing': return 'В обработке';
+        case 'shipping': return 'Доставляется';
+        case 'delivered': return 'Доставлен';
+        case 'cancelled': return 'Отменён';
+        default: return status;
+      }
+    }
+
+    function pluralize(number, titles) {
+      const cases = [2, 0, 1, 1, 1, 2];
+      return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+    }
+
+    // Обработчики событий
+    accountIcon.addEventListener('click', () => {
+      accountModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      updateAccountInfo();
+    });
+
+    closeAccount.addEventListener('click', () => {
+      accountModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    trackOrderBtnFixed.addEventListener('click', () => {
+      trackOrderModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeTrackOrder.addEventListener('click', () => {
+      trackOrderModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    trackOrderBtn.addEventListener('click', () => {
+      const orderNumber = orderNumberInput.value.trim();
+      
+      if (!orderNumber) {
+        alert('Пожалуйста, введите номер заказа');
+        return;
+      }
+      
+      // В реальном приложении здесь запрос к серверу
+      // Для демонстрации просто показываем информацию
+      document.getElementById('trackedOrderNumber').textContent = orderNumber;
+      orderStatusInfo.classList.remove('hidden');
+    });
+
+    // Оформление заказа
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(checkoutForm);
+      const deliveryMethod = formData.get('deliveryMethod');
+      
+      if (!currentUser) {
+        alert('Для оформления заказа необходимо авторизоваться');
+        checkoutModal.classList.add('hidden');
+        authModal.classList.remove('hidden');
+        return;
+      }
+      
+      const orderData = {
+        number: generateOrderNumber(),
+        date: new Date().toISOString(),
+        status: 'processing',
+        userId: currentUser.id,
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        address: formData.get('address'),
+        deliveryMethod: deliveryMethod,
+  pickupLocation: deliveryMethod === 'pickup' ? formData.get('pickupLocation') : null,
+  pickupDateTime: deliveryMethod === 'pickup' ? formData.get('pickupDateTime') : null,
+  address: deliveryMethod === 'delivery' ? formData.get('address') : null,
+  deliveryDate: deliveryMethod === 'delivery' ? formData.get('deliveryDate') : null,
+  deliveryTime: deliveryMethod === 'delivery' ? formData.get('deliveryTime') : null,
+        deliveryDate: formData.get('deliveryDate'),
+        deliveryTime: formData.get('deliveryTime'),
+        payment: formData.get('payment'),
+        comment: formData.get('comment'),
+        items: [...cart],
+        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + (cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) > 2000 ? 0 : 300)
+      };
+      
+      // Обновляем данные пользователя
+      currentUser = {
+        ...currentUser,
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        address: formData.get('address')
+      };
+      
+      // Обновляем пользователя в списке пользователей
+      const userIndex = users.findIndex(u => u.id === currentUser.id);
+      if (userIndex !== -1) {
+        users[userIndex] = currentUser;
+      }
+      
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Добавляем заказ в историю
+      orders.unshift(orderData);
+      localStorage.setItem('orders', JSON.stringify(orders));
+      
+      // Очищаем корзину
+      cart = [];
+      updateCart();
+      
+      // Показываем подтверждение
+      checkoutModal.classList.add('hidden');
+      orderNumber.textContent = orderData.number;
+      orderSuccess.classList.remove('hidden');
+      
+      // Обновляем информацию в личном кабинете
+      updateAccountInfo();
+    });
+
+    // Авторизация/регистрация
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = loginForm.querySelector('input[type="email"]').value;
+      const password = loginForm.querySelector('input[type="password"]').value;
+      
+      if (!email || !password) {
+        alert('Пожалуйста, заполните все поля');
+        return;
+      }
+      
+      // Проверяем существующего пользователя
+      const user = users.find(u => u.email === email && u.password === password);
+      
+      if (!user) {
+        alert('Неверный email или пароль');
+        return;
+      }
+      
+      // Устанавливаем текущего пользователя
+      currentUser = user;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      
+      // Закрываем модальное окно авторизации
+      authModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      
+      // Обновляем информацию в личном кабинете
+      updateAccountInfo();
+      
+      // Если это администратор, показываем кнопку админ-панели
+      if (currentUser.isAdmin) {
+        showAdminPanelButton();
+      }
+      
+      alert(`Добро пожаловать, ${currentUser.name}!`);
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = registerForm.querySelector('input[type="text"]').value;
+      const email = registerForm.querySelector('input[type="email"]').value;
+      const phone = registerForm.querySelector('input[type="tel"]').value;
+      const password = registerForm.querySelectorAll('input[type="password"]')[0].value;
+      const confirmPassword = registerForm.querySelectorAll('input[type="password"]')[1].value;
+      
+      if (!name || !email || !phone || !password || !confirmPassword) {
+        alert('Пожалуйста, заполните все поля');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        alert('Пароли не совпадают');
+        return;
+      }
+      
+      // Проверяем, нет ли уже пользователя с таким email
+      if (users.some(u => u.email === email)) {
+        alert('Пользователь с таким email уже зарегистрирован');
+        return;
+      }
+      
+      // Создаем нового пользователя
+      const newUser = {
+        id: generateUserId(),
+        name: name,
+        email: email,
+        phone: phone,
+        password: password,
+        address: 'Не указан',
+        isAdmin: false,
+        createdAt: new Date().toISOString()
+      };
+      
+      // Добавляем пользователя в список
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Устанавливаем текущего пользователя
+      currentUser = newUser;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      
+      // Закрываем модальное окно регистрации
+      authModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      
+      // Обновляем информацию в личном кабинете
+      updateAccountInfo();
+      
+      alert('Регистрация прошла успешно! Добро пожаловать!');
+    });
+
+    function generateUserId() {
+      return 'user_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Выход из системы
+    logoutBtn.addEventListener('click', () => {
+      currentUser = null;
+      localStorage.removeItem('currentUser');
+      
+      // Закрываем личный кабинет
+      accountModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      
+      // Закрываем админ-панель, если она открыта
+      adminPanelModal.classList.add('hidden');
+      
+      // Удаляем кнопку админ-панели
+      const adminPanelBtn = document.getElementById('adminPanelBtn');
+      if (adminPanelBtn) {
+        adminPanelBtn.remove();
+      }
+      
+      alert('Вы успешно вышли из системы');
+    });
+
+    // Закрытие модального окна авторизации
+    closeAuth.addEventListener('click', () => {
+      authModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    // Админ-панель
+    const adminPanelModal = document.createElement('div');
+    adminPanelModal.id = 'adminPanelModal';
+    adminPanelModal.className = 'fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4';
+    adminPanelModal.innerHTML = `
+      <div class="bg-white rounded-xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+          <h3 class="text-xl font-bold">Админ-панель</h3>
+          <button id="closeAdminPanel" class="text-2xl text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="p-6">
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-2xl font-bold mb-1" id="totalOrdersCount">0</div>
+              <div class="text-sm text-gray-500">Всего заказов</div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-2xl font-bold mb-1" id="processingOrdersCount">0</div>
+              <div class="text-sm text-gray-500">В обработке</div>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="text-2xl font-bold mb-1" id="todayOrdersCount">0</div>
+              <div class="text-sm text-gray-500">Сегодня</div>
+            </div>
+          </div>
+          
+          <div class="mb-6">
+            <h4 class="font-semibold mb-4">Все заказы</h4>
+            <div id="adminOrdersList" class="space-y-4">
+              <!-- Заказы будут добавляться сюда -->
+              <div class="text-center py-8 text-gray-500">
+                <i class="fas fa-box-open text-3xl mb-2"></i>
+                <p>Нет заказов</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(adminPanelModal);
+
+    const closeAdminPanel = document.getElementById('closeAdminPanel');
+
+    function showAdminPanel() {
+      adminPanelModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      updateAdminPanel();
+    }
+
+    function showAdminPanelButton() {
+      // Удаляем старую кнопку, если она есть
+      const oldBtn = document.getElementById('adminPanelBtn');
+      if (oldBtn) oldBtn.remove();
+      
+      // Создаем новую кнопку
+      const adminPanelBtn = document.createElement('div');
+      adminPanelBtn.id = 'adminPanelBtn';
+      adminPanelBtn.className = 'fixed top-20 right-4 z-50 bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer';
+      adminPanelBtn.innerHTML = '<i class="fas fa-lock"></i>';
+      
+      adminPanelBtn.addEventListener('click', () => {
+        showAdminPanel();
+      });
+      
+      document.body.appendChild(adminPanelBtn);
+    }
+
+    function updateAdminPanel() {
+      // Статистика
+      document.getElementById('totalOrdersCount').textContent = orders.length;
+      document.getElementById('processingOrdersCount').textContent = orders.filter(o => o.status === 'processing').length;
+      
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('todayOrdersCount').textContent = orders.filter(o => o.date.split('T')[0] === today).length;
+      
+      // Список заказов
+      renderAdminOrdersList();
+    }
+
+    function renderAdminOrdersList() {
+      const adminOrdersList = document.getElementById('adminOrdersList');
+      
+      // Сортируем заказы - новые сначала
+      const sortedOrders = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      if (sortedOrders.length === 0) {
+        adminOrdersList.innerHTML = `
+          <div class="text-center py-8 text-gray-500">
+            <i class="fas fa-box-open text-3xl mb-2"></i>
+            <p>Нет заказов</p>
+          </div>
+        `;
+        return;
+      }
+      
+      adminOrdersList.innerHTML = '';
+      
+      sortedOrders.forEach(order => {
+        // Находим пользователя, который сделал заказ
+        const user = users.find(u => u.id === order.userId) || { 
+          name: 'Неизвестный пользователь', 
+          email: 'Нет данных', 
+          phone: 'Нет данных' 
+        };
+        
+        const orderElement = document.createElement('div');
+        orderElement.className = 'order-card p-4';
+        orderElement.innerHTML = `
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <p class="font-medium">Заказ #${order.number}</p>
+              <p class="text-sm text-gray-500">
+                ${new Date(order.date).toLocaleDateString('ru-RU', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </p>
+              <p class="text-sm mt-1">
+                <span class="font-medium">${user.name}</span>, 
+                ${user.phone}, 
+                ${user.email}
+              </p>
+            </div>
+            <span class="order-status ${getStatusClass(order.status)}">
+              ${getStatusText(order.status)}
+            </span>
+          </div>
+          
+          <div class="mb-3">
+            ${order.items.map(item => `
+              <div class="flex justify-between text-sm py-1 border-b border-gray-100 last:border-0">
+                <span>${item.name} × ${item.quantity}</span>
+                <span>${(item.price * item.quantity).toLocaleString()} ₽</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="flex justify-between font-medium border-t border-gray-200 pt-2 mb-4">
+            <span>Итого:</span>
+            <span>${order.total.toLocaleString()} ₽</span>
+          </div>
+          
+          <div class="flex space-x-3">
+            ${order.status === 'processing' ? `
+              <button class="admin-confirm-btn flex-grow bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg" data-order="${order.number}">
+                Подтвердить
+              </button>
+              <button class="admin-cancel-btn flex-grow bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg" data-order="${order.number}">
+                Отменить
+              </button>
+            ` : ''}
+            
+            ${order.status === 'shipping' ? `
+              <button class="admin-deliver-btn flex-grow bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg" data-order="${order.number}">
+                Доставлен
+              </button>
+            ` : ''}
+            
+            <button class="admin-delete-btn bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg" data-order="${order.number}">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        `;
+        
+        adminOrdersList.appendChild(orderElement);
+      });
+      
+      // Добавляем обработчики для кнопок
+      document.querySelectorAll('.admin-confirm-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orderNumber = e.currentTarget.getAttribute('data-order');
+          updateOrderStatus(orderNumber, 'shipping');
+        });
+      });
+      
+      document.querySelectorAll('.admin-cancel-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orderNumber = e.currentTarget.getAttribute('data-order');
+          updateOrderStatus(orderNumber, 'cancelled');
+        });
+      });
+      
+      document.querySelectorAll('.admin-deliver-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orderNumber = e.currentTarget.getAttribute('data-order');
+          updateOrderStatus(orderNumber, 'delivered');
+        });
+      });
+      
+      document.querySelectorAll('.admin-delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orderNumber = e.currentTarget.getAttribute('data-order');
+          if (confirm(`Вы уверены, что хотите полностью удалить заказ #${orderNumber}? Это действие нельзя отменить.`)) {
+            deleteOrder(orderNumber);
+          }
+        });
+      });
+    }
+
+    
+
+    function updateOrderStatus(orderNumber, newStatus) {
+      const orderIndex = orders.findIndex(o => o.number === orderNumber);
+      if (orderIndex !== -1) {
+        orders[orderIndex].status = newStatus;
+        orders[orderIndex].statusUpdated = new Date().toISOString();
+        
+        localStorage.setItem('orders', JSON.stringify(orders));
+        
+        // Обновляем панель
+        updateAdminPanel();
+        
+        // Если открыт личный кабинет - обновляем его тоже
+        if (!accountModal.classList.contains('hidden')) {
+          updateAccountInfo();
+        }
+      }
+    }
+
+    function deleteOrder(orderNumber) {
+      // Удаляем заказ из массива
+      orders = orders.filter(order => order.number !== orderNumber);
+      
+      // Сохраняем изменения
+      localStorage.setItem('orders', JSON.stringify(orders));
+      
+      // Обновляем интерфейс
+      updateAdminPanel();
+      
+      // Если открыт личный кабинет - обновляем его
+      if (!accountModal.classList.contains('hidden')) {
+        updateAccountInfo();
+      }
+      
+      alert(`Заказ #${orderNumber} был удален`);
+    }
+
+    closeAdminPanel.addEventListener('click', () => {
+      adminPanelModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    // Инициализация при загрузке
+    function initialize() {
+      // Проверяем, есть ли в базе администратор
+      const adminExists = users.some(u => u.isAdmin);
+      
+      if (!adminExists) {
+        // Создаем администратора по умолчанию
+        const adminUser = {
+          id: 'admin_123',
+          name: 'Администратор',
+          email: 'admin@kaffe.ru',
+          password: 'admin123',
+          phone: '+7 (999) 123-45-67',
+          address: 'ул. Кофейная, 56, Москва',
+          isAdmin: true,
+          createdAt: new Date().toISOString()
+        };
+        
+        users.push(adminUser);
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+      
+      // Если есть текущий пользователь и он администратор - показываем кнопку админ-панели
+      if (currentUser && currentUser.isAdmin) {
+        showAdminPanelButton();
+      }
+      
+      // Обновляем информацию о пользователе
+      updateAccountInfo();
+    }
+
+    // Запускаем инициализацию при загрузке страницы
+    initialize();
+  </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>О нас</title>
+  <meta name="description" content="Узнайте больше о кофейне Kaffé — нашей философии, команде и подходе к кофе." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #6F4E37;
+      --secondary: #C4A484;
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .fade-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+      z-index: 1;
+    }
+    .menu-item:hover .menu-hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .mobile-menu {
+      transition: all 0.3s ease-in-out;
+      transform: translateX(100%);
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .floating-button {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .coffee-drip {
+      position: relative;
+    }
+    .coffee-drip::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50% 50% 0 0;
+    }
+    .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .values-icon {
+      transition: all 0.3s ease;
+    }
+    .values-card:hover .values-icon {
+      transform: rotate(15deg) scale(1.1);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white z-50 p-8 flex flex-col items-center justify-center">
+    <button id="closeMenu" class="absolute top-6 right-6 text-2xl">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex flex-col space-y-8 text-center">
+      <a href="index.html" class="text-2xl font-semibold hover:text-amber-800 transition">Главная</a>
+      <a href="contacts.html" class="text-2xl font-semibold hover:text-amber-800 transition">Контакты</a>
+    </nav>
+    <div class="mt-12 flex space-x-6">
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-vk"></i></a>
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="w-full fixed top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-bold tracking-tight text-amber-900">Kaffé</a>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="index.html" class="hover:text-amber-800 transition">Главная</a>
+        <a href="contacts.html" class="hover:text-amber-800 transition">Контакты</a>
+        <a href="promotions.html" class="hover:text-amber-800 transition">Акции</a>
+      </nav>
+      <button id="openMenu" class="md:hidden text-xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero About -->
+  <section class="relative h-[60vh] flex items-center justify-center pt-24 overflow-hidden fade-overlay">
+    <div class="absolute inset-0 w-full h-full">
+      <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=1920&q=80" 
+           alt="Команда бариста Kaffé" 
+           class="absolute inset-0 w-full h-full object-cover" 
+           id="heroImage"/>
+    </div>
+    <div class="relative z-10 text-center px-6" data-aos="fade-up">
+      <h1 class="text-white text-5xl md:text-7xl font-bold leading-tight mb-6 drop-shadow-2xl">Наша история</h1>
+      <p class="text-white text-xl mb-8 max-w-2xl mx-auto drop-shadow-lg">С 2015 года мы создаём пространство, где кофе — это искусство, а каждый гость — часть нашей семьи.</p>
+    </div>
+  </section>
+
+  <!-- Our Story -->
+  <section class="py-32 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-amber-800 font-medium uppercase tracking-wider">Начало</span>
+        <h2 class="text-4xl font-semibold mb-4 mt-2">Как всё начиналось</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">Небольшая кофейня с двумя столиками переросла в сообщество ценителей качественного кофе и уютной атмосферы.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-16 items-center mb-24">
+        <div class="relative" data-aos="fade-right">
+          <img src="https://media.istockphoto.com/id/2160707342/ru/фото/making-decision-on-the-move.jpg?s=612x612&w=0&k=20&c=ToeHbRCK_t7yDyKBMJT2RejBRK2siIicz1gY2M5vLrM=" 
+               alt="Основатели Kaffé" 
+               class="rounded-3xl shadow-2xl w-full">
+          <div class="absolute -bottom-6 -right-6 bg-amber-800 text-white p-6 rounded-2xl shadow-xl">
+            <div class="text-4xl font-bold">2015</div>
+            <div class="text-sm uppercase tracking-wider">Год основания</div>
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <h3 class="text-3xl font-semibold mb-6">От маленькой идеи к большому сообществу</h3>
+          <p class="text-gray-700 text-lg leading-relaxed mb-4">Всё началось с любви к кофе и желания создать место, где каждый сможет почувствовать себя как дома. Наши основатели, Анна и Максим, начали с крошечного пространства в центре Москвы, где сами готовили кофе и общались с гостями.</p>
+          <p class="text-gray-700 text-lg leading-relaxed mb-6">Сегодня Kaffé — это три кофейни, команда профессиональных бариста и тысячи довольных гостей, многие из которых стали нашими друзьями.</p>
+          <div class="flex items-center space-x-4">
+            <div>
+              <div class="font-semibold">Анна и Максим</div>
+              <div class="text-sm text-gray-600">Основатели Kaffé</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div data-aos="fade-right">
+          <h3 class="text-3xl font-semibold mb-6">Наша философия</h3>
+          <p class="text-gray-700 text-lg leading-relaxed mb-4">Мы верим, что отличный кофе — это не просто напиток, а целый опыт. От выбора зёрен до момента, когда чашка оказывается в ваших руках — каждый этап наполнен заботой и вниманием к деталям.</p>
+          <p class="text-gray-700 text-lg leading-relaxed mb-6">Наша миссия — не просто обслуживать, а вдохновлять. Мы хотим, чтобы каждый визит в Kaffé дарил вам не только вкусный кофе, но и хорошее настроение, новые знакомства и ощущение принадлежности к чему-то особенному.</p>
+        </div>
+        <div class="relative" data-aos="fade-left">
+          <img src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?auto=format&fit=crop&w=1000&q=80" 
+               alt="Философия Kaffé" 
+               class="rounded-3xl shadow-2xl w-full">
+          <div class="absolute -bottom-6 -left-6 bg-white text-amber-800 p-6 rounded-2xl shadow-xl border border-amber-100">
+            <div class="text-4xl font-bold">100%</div>
+            <div class="text-sm uppercase tracking-wider">Счастья в каждой чашке</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Values -->
+  <section class="py-20 bg-amber-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="text-amber-800 font-medium uppercase tracking-wider">Ценности</span>
+        <h2 class="text-4xl font-semibold mb-4 mt-2">Что для нас важно</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">Наши принципы, которые направляют каждое решение и каждое действие.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="values-card bg-white p-8 rounded-2xl shadow-md transition duration-300" data-aos="fade-up">
+          <div class="values-icon text-amber-800 text-4xl mb-6 w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Устойчивость</h3>
+          <p class="text-gray-600">Мы работаем только с теми поставщиками, кто разделяет наши ценности экологичности и справедливой торговли.</p>
+        </div>
+        
+        <div class="values-card bg-white p-8 rounded-2xl shadow-md transition duration-300" data-aos="fade-up" data-aos-delay="100">
+          <div class="values-icon text-amber-800 text-4xl mb-6 w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Сообщество</h3>
+          <p class="text-gray-600">Kaffé — это место встреч, общения и вдохновения. Мы поддерживаем локальные инициативы и таланты.</p>
+        </div>
+        
+        <div class="values-card bg-white p-8 rounded-2xl shadow-md transition duration-300" data-aos="fade-up" data-aos-delay="200">
+          <div class="values-icon text-amber-800 text-4xl mb-6 w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center">
+            <i class="fas fa-award"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Мастерство</h3>
+          <p class="text-gray-600">Постоянное обучение и совершенствование — наш путь к тому, чтобы каждый ваш глоток был идеальным.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Achievements -->
+  <section class="py-20 bg-amber-900 text-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <span class="font-medium uppercase tracking-wider opacity-80">Достижения</span>
+        <h2 class="text-4xl font-semibold mb-4 mt-2">Наша гордость</h2>
+        <p class="text-amber-200 max-w-3xl mx-auto">Моменты, которые вдохновляют нас становиться лучше каждый день.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm" data-aos="fade-up">
+          <div class="text-amber-300 text-5xl font-bold mb-4">3</div>
+          <h3 class="text-xl font-semibold mb-3">Кофейни в Москве</h3>
+          <p class="text-amber-200">Каждая с уникальной атмосферой, но одинаково тёплым приёмом.</p>
+        </div>
+        
+        <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-amber-300 text-5xl font-bold mb-4">15+</div>
+          <h3 class="text-xl font-semibold mb-3">Наград и признаний</h3>
+          <p class="text-amber-200">От профессиональных сообществ и гидов по кофейням.</p>
+        </div>
+        
+        <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-amber-300 text-5xl font-bold mb-4">50+</div>
+          <h3 class="text-xl font-semibold mb-3">Мастер-классов</h3>
+          <p class="text-amber-200">Проведено для гостей и начинающих бариста.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-amber-800 text-white">
+    <div class="max-w-4xl mx-auto px-6 text-center" data-aos="fade-up">
+      <h2 class="text-3xl font-semibold mb-6">Готовы стать частью нашей истории?</h2>
+      <p class="text-amber-200 mb-8 max-w-2xl mx-auto">Приходите в любую из наших кофеен или свяжитесь с нами для сотрудничества.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="contacts.html" class="inline-block bg-white hover:bg-gray-100 text-amber-800 px-8 py-4 font-semibold uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+          Контакты
+        </a>
+        <a href="index.html" class="inline-block border-2 border-white text-white hover:bg-white hover:text-amber-800 px-8 py-4 font-semibold uppercase tracking-wider rounded-full shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+          Посмотреть меню
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-amber-900 text-white py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Kaffé</h3>
+          <p class="text-amber-200">Авторский кофе с душой — местной обжарки, отборных сортов, идеального приготовления.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Навигация</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-amber-200 hover:text-white transition">Главная</a></li>
+            <li><a href="index.html#menu" class="text-amber-200 hover:text-white transition">Меню</a></li>
+            <li><a href="contacts.html" class="text-amber-200 hover:text-white transition">Контакты</a></li>
+            <li><a href="promotions.html" class="hover:text-amber-800 transition">Акции</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Контакты</h4>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">ул. Кофейная, 56, Москва</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-phone-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">+7 (495) 123-45-67</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-envelope mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">hello@kaffe.ru</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Рассылка</h4>
+          <p class="text-amber-200 mb-4">Подпишитесь на обновления и специальные предложения.</p>
+          <form class="flex">
+            <input type="email" 
+                   placeholder="Ваш email" 
+                   class="px-4 py-2 rounded-l-lg text-gray-900 focus:outline-none w-full">
+            <button type="submit" 
+                    class="bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-r-lg transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-amber-800 mt-12 pt-8 text-center text-sm text-amber-300">
+        <p>&copy; 2025 Kaffé. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-amber-800 text-white w-12 h-12 rounded-full shadow-xl flex items-center justify-center opacity-0 invisible transition-all duration-300 z-40">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+
+    // Mobile menu toggle
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    openMenu.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+        backToTop.classList.add('opacity-100', 'visible');
+      } else {
+        backToTop.classList.remove('opacity-100', 'visible');
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Gallery lightbox
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightbox = document.getElementById('closeLightbox');
+    
+    galleryItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const imgSrc = item.getAttribute('href');
+        lightboxImage.setAttribute('src', imgSrc);
+        lightbox.classList.remove('opacity-0', 'invisible');
+        lightbox.classList.add('opacity-100', 'visible');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    closeLightbox.addEventListener('click', () => {
+      lightbox.classList.remove('opacity-100', 'visible');
+      lightbox.classList.add('opacity-0', 'invisible');
+      document.body.style.overflow = '';
+    });
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('opacity-100', 'visible');
+        lightbox.classList.add('opacity-0', 'invisible');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Testimonials slider
+    new Glide('.glide', {
+      type: 'carousel',
+      perView: 1,
+      autoplay: 5000,
+      hoverpause: true,
+      gap: 40,
+      animationDuration: 800
+    }).mount();
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+
+    // Hero image parallax effect
+    const heroImage = document.getElementById('heroImage');
+    
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.pageYOffset;
+      heroImage.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+    });
+
+    // Menu item hover effects
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    menuItems.forEach(item => {
+      const hoverElement = item.querySelector('.menu-hover');
+      
+      item.addEventListener('mouseenter', () => {
+        hoverElement.style.transform = 'translateY(-10px)';
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        hoverElement.style.transform = '';
+      });
+    });
+  </script>
+</body>
+</html>
+
+       

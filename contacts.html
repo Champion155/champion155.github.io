@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaffé</title>
+  <meta name="description" content="Kaffé — авторский кофе и атмосферные кофейни с душой." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #6F4E37;
+      --secondary: #C4A484;
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .mobile-menu {
+      transition: all 0.3s ease-in-out;
+      transform: translateX(100%);
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    .coffee-drip {
+      position: relative;
+    }
+    .coffee-drip::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50% 50% 0 0;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-white z-50 p-8 flex flex-col items-center justify-center">
+    <button id="closeMenu" class="absolute top-6 right-6 text-2xl">
+      <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex flex-col space-y-8 text-center">
+      <a href="about.html" class="text-2xl font-semibold hover:text-amber-800 transition">О нас</a>
+      <a href="menu.html" class="text-2xl font-semibold hover:text-amber-800 transition">Меню</a>
+      <a href="process.html" class="text-2xl font-semibold hover:text-amber-800 transition">Процесс</a>
+      <a href="contacts.html" class="text-2xl font-semibold hover:text-amber-800 transition">Контакты</a>
+    </nav>
+    <div class="mt-12 flex space-x-6">
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-vk"></i></a>
+      <a href="#" class="text-xl hover:text-amber-800 transition"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="w-full fixed top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-bold tracking-tight text-amber-900">Kaffé</a>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="index.html" class="hover:text-amber-800 transition">Главная</a>
+        <a href="about.html" class="hover:text-amber-800 transition">О нас</a>
+        <a href="promotions.html" class="hover:text-amber-800 transition">Акции</a>
+      </nav>
+      <button id="openMenu" class="md:hidden text-xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative h-96 flex items-center justify-center pt-24 bg-amber-900 overflow-hidden">
+    <div class="absolute inset-0 w-full h-full">
+      <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1920&q=80" 
+           alt="Кофейня Kaffé" 
+           class="absolute inset-0 w-full h-full object-cover opacity-50" />
+    </div>
+    <div class="relative z-10 text-center px-6">
+      <h1 class="text-white text-4xl md:text-5xl font-bold leading-tight mb-6 drop-shadow-2xl">Наши контакты</h1>
+      <p class="text-white text-lg mb-8 max-w-2xl mx-auto drop-shadow-lg">Приходите к нам за лучшим кофе в городе.</p>
+    </div>
+  </section>
+
+  <!-- Contacts -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <h2 class="text-3xl font-semibold mb-6 coffee-drip">Кофейня Kaffé</h2>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-map-marker-alt text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Адрес</h4>
+                <p class="text-gray-600">ул. Кофейная, 56, Москва</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-clock text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Часы работы</h4>
+                <p class="text-gray-600">Пн-Пт: 8:00 - 20:00</p>
+                <p class="text-gray-600">Сб-Вс: 9:00 - 19:00</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-phone-alt text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Телефон</h4>
+                <p class="text-gray-600">+7 (495) 123-45-67</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="text-amber-800 mr-4 mt-1">
+                <i class="fas fa-envelope text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Email</h4>
+                <p class="text-gray-600">hello@kaffe.ru</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 flex space-x-4">
+            <a href="#" class="bg-amber-800 hover:bg-amber-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+              <i class="fab fa-vk"></i>
+            </a>
+            <a href="#" class="bg-amber-800 hover:bg-amber-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+              <i class="fab fa-telegram"></i>
+            </a>
+          </div>
+        </div>
+        <div class="rounded-2xl overflow-hidden shadow-xl h-96">
+          <iframe class="w-full h-full" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.3727893796033!2d37.61763331593076!3d55.75202398055303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5a738fa419%3A0x7c347d506f52311f!2z0JrQvtC80YHQutC-0Lkg0L_RgNC-0YHQvy4sIDU2LCDQnNC-0YHQutCy0LAsINCg0L7RgdGB0LjRjywgMTAxMDAw!5e0!3m2!1sru!2sru!4v1620000000000!5m2!1sru!2sru" 
+                  style="border:0;" 
+                  allowfullscreen="" 
+                  loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-amber-900 text-white py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Kaffé</h3>
+          <p class="text-amber-200">Авторский кофе с душой — местной обжарки, отборных сортов, идеального приготовления.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Навигация</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-amber-200 hover:text-white transition">Главная</a></li>
+            <li><a href="about.html" class="text-amber-200 hover:text-white transition">О нас</a></li>
+            <li><a href="promotions.html" class="text-amber-200 hover:text-white transition">Акции</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Контакты</h4>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">ул. Кофейная, 56, Москва</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-phone-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">+7 (495) 123-45-67</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-envelope mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">hello@kaffe.ru</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Рассылка</h4>
+          <p class="text-amber-200 mb-4">Подпишитесь на обновления и специальные предложения.</p>
+          <form class="flex">
+            <input type="email" 
+                   placeholder="Ваш email" 
+                   class="px-4 py-2 rounded-l-lg text-gray-900 focus:outline-none w-full">
+            <button type="submit" 
+                    class="bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-r-lg transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-amber-800 mt-12 pt-8 text-center text-sm text-amber-300">
+        <p>&copy; 2025 Kaffé. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="fixed bottom-8 right-8 bg-amber-800 text-white w-12 h-12 rounded-full shadow-xl flex items-center justify-center opacity-0 invisible transition-all duration-300 z-40">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    openMenu.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+        backToTop.classList.add('opacity-100', 'visible');
+      } else {
+        backToTop.classList.remove('opacity-100', 'visible');
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

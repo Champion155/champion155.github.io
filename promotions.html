@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Акции | Kaffé</title>
+  <meta name="description" content="Специальные предложения и события в кофейнях Kaffé" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #6F4E37;
+      --secondary: #C4A484;
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .promotion-card {
+      transition: all 0.3s ease;
+    }
+    .promotion-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.5);
+    }
+    input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Header -->
+  <header class="w-full fixed top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-bold tracking-tight text-amber-900">Kaffé</a>
+      <nav class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="index.html" class="hover:text-amber-800 transition">Главная</a>
+        <a href="index.html#menu" class="hover:text-amber-800 transition">Меню</a>
+        <a href="promotions.html" class="text-amber-800 transition">Акции</a>
+        <a href="contacts.html" class="hover:text-amber-800 transition">Контакты</a>
+      </nav>
+      <button id="openMenu" class="md:hidden text-xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Promotions Hero -->
+  <section class="relative h-96 flex items-center justify-center pt-24 bg-amber-900 overflow-hidden">
+    <div class="absolute inset-0 w-full h-full">
+        <img src="https://cdn.concreteplayground.com/content/uploads/2023/10/Wide-Open-Road-coffee-melbourne-cafe-supplied--1920x1080.jpg" 
+             alt="Кофейня Kaffé" 
+             class="absolute inset-0 w-full h-full object-cover opacity-50" />
+      </div>
+    <div class="relative z-10 text-center px-6">
+      <h1 class="text-white text-4xl md:text-5xl font-bold leading-tight mb-6 drop-shadow-2xl">Акции и события</h1>
+      <p class="text-white text-lg mb-8 max-w-2xl mx-auto drop-shadow-lg">Специальные предложения, которые ждут вас в наших кофейнях</p>
+    </div>
+  </section>
+
+  <!-- Current Promotions -->
+  <section class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-12 text-center">Текущие акции</h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Promotion 1 -->
+        <div class="promotion-card bg-white rounded-2xl shadow-md overflow-hidden" data-aos="fade-up">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                 alt="Кофе и десерт" 
+                 class="w-full h-full object-cover transition duration-500 hover:scale-105">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+              <span class="inline-block bg-amber-800 text-white text-sm px-3 py-1 rounded-full mb-2">До 30.09.2025</span>
+              <h3 class="text-xl font-semibold text-white">Кофе + десерт = гармония</h3>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">При заказе любого фирменного кофе получите авторский десерт в подарок. Акция действует с 14:00 до 18:00 в будние дни.</p>
+            <button class="promotion-details-btn text-amber-800 hover:text-amber-600 font-medium flex items-center" data-promo-id="1">
+              Узнать подробнее
+              <i class="fas fa-chevron-right ml-2 text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Promotion 2 -->
+        <div class="promotion-card bg-white rounded-2xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                 alt="Вечер живой музыки" 
+                 class="w-full h-full object-cover transition duration-500 hover:scale-105">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+              <span class="inline-block bg-amber-800 text-white text-sm px-3 py-1 rounded-full mb-2">Каждую пятницу</span>
+              <h3 class="text-xl font-semibold text-white">Джазовые вечера</h3>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">Каждую пятницу с 19:00 до 22:00 наслаждайтесь живой музыкой и специальным меню. При предъявлении студенческого - скидка 15%.</p>
+            <button class="promotion-details-btn text-amber-800 hover:text-amber-600 font-medium flex items-center" data-promo-id="2">
+              Узнать подробнее
+              <i class="fas fa-chevron-right ml-2 text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Promotion 3 -->
+        <div class="promotion-card bg-white rounded-2xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                 alt="Мастер-класс по латте-арту" 
+                 class="w-full h-full object-cover transition duration-500 hover:scale-105">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+              <span class="inline-block bg-amber-800 text-white text-sm px-3 py-1 rounded-full mb-2">25.10.2025</span>
+              <h3 class="text-xl font-semibold text-white">Мастер-класс от бариста</h3>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">Научитесь создавать латте-арт у нашего чемпиона! В стоимость включены все материалы и дегустация. Только по предварительной записи.</p>
+            <button class="promotion-details-btn text-amber-800 hover:text-amber-600 font-medium flex items-center" data-promo-id="3">
+              Узнать подробнее
+              <i class="fas fa-chevron-right ml-2 text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section class="py-16 px-6 bg-amber-50">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-12 text-center">Ближайшие события</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Event 1 -->
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden" data-aos="fade-up">
+          <div class="md:flex">
+            <div class="md:w-1/3 h-48 md:h-auto">
+              <img src="https://img.freepik.com/free-photo/vertical-shot-female-s-hands-holding-cup-tea-table-with-autumn-leaf-book_181624-52107.jpg?semt=ais_hybrid&w=740" 
+                   alt="Вечер поэзии" 
+                   class="w-full h-full object-cover">
+            </div>
+            <div class="p-6 md:w-2/3">
+              <div class="flex items-center mb-2">
+                <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded mr-3">15.11.2025</span>
+                <span class="text-sm text-gray-500"><i class="fas fa-map-marker-alt mr-1"></i> ул. Кофейная, 56</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Вечер поэзии и кофе</h3>
+              <p class="text-gray-600 mb-4">Чтение стихов под акустическую музыку с дегустацией специально подобранных сортов кофе.</p>
+              <button class="book-event-btn text-amber-800 hover:text-amber-600 font-medium flex items-center" data-event-id="1">
+                Забронировать место
+                <i class="fas fa-chevron-right ml-2 text-sm"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="md:flex">
+            <div class="md:w-1/3 h-48 md:h-auto">
+              <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                   alt="Кофейная церемония" 
+                   class="w-full h-full object-cover">
+            </div>
+            <div class="p-6 md:w-2/3">
+              <div class="flex items-center mb-2">
+                <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded mr-3">22.11.2025</span>
+                <span class="text-sm text-gray-500"><i class="fas fa-map-marker-alt mr-1"></i> пр. Ароматный, 12</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Эфиопская кофейная церемония</h3>
+              <p class="text-gray-600 mb-4">Аутентичная церемония приготовления кофе по традициям Эфиопии с рассказом о культуре кофе.</p>
+              <button class="book-event-btn text-amber-800 hover:text-amber-600 font-medium flex items-center" data-event-id="2">
+                Забронировать место
+                <i class="fas fa-chevron-right ml-2 text-sm"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promotion Details Modal -->
+  <div id="promotionModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-xl font-bold" id="promotionModalTitle">Детали акции</h3>
+        <button id="closePromotionModal" class="text-2xl text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <div class="mb-6">
+          <img id="promotionModalImage" src="" alt="" class="w-full h-64 object-cover rounded-lg mb-4">
+          <div class="flex items-center space-x-4 mb-4">
+            <span id="promotionModalDate" class="bg-amber-100 text-amber-800 text-sm px-3 py-1 rounded-full"></span>
+            <span id="promotionModalLocation" class="text-sm text-gray-500">
+              <i class="fas fa-map-marker-alt mr-1"></i>
+              <span id="promotionModalLocationText">Все кофейни Kaffé</span>
+            </span>
+          </div>
+        </div>
+        <div class="prose max-w-none" id="promotionModalContent">
+          <!-- Контент будет загружаться динамически -->
+        </div>
+        <div class="mt-8 bg-amber-50 p-4 rounded-lg">
+          <h4 class="font-semibold text-amber-800 mb-2">Условия акции:</h4>
+          <ul id="promotionModalTerms" class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+            <!-- Условия будут загружаться динамически -->
+          </ul>
+        </div>
+        <button id="bookTableBtn" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg mt-6">
+          Забронировать столик
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Booking Modal -->
+  <div id="eventBookingModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-xl font-bold">Бронирование на событие</h3>
+        <button id="closeEventBookingModal" class="text-2xl text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <form id="eventBookingForm">
+          <input type="hidden" id="eventId" name="eventId">
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Событие</label>
+            <input type="text" id="eventName" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100" readonly>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Дата и время</label>
+            <input type="text" id="eventDateTime" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100" readonly>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Локация</label>
+            <input type="text" id="eventLocation" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100" readonly>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Количество человек*</label>
+            <select name="guests" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+              <option value="">Выберите количество</option>
+              <option value="1">1 человек</option>
+              <option value="2">2 человека</option>
+              <option value="3">3 человека</option>
+              <option value="4">4 человека</option>
+              <option value="5">5+ человек</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Ваше имя*</label>
+            <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Телефон*</label>
+            <input type="tel" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="+7 (___) ___-__-__">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Email</label>
+            <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Комментарий</label>
+            <textarea name="comment" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" rows="2"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg">
+            Подтвердить бронирование
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Booking Modal -->
+  <div id="tableBookingModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-xl font-bold">Бронирование столика</h3>
+        <button id="closeTableBookingModal" class="text-2xl text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <form id="tableBookingForm">
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Выберите кофейню*</label>
+            <select name="location" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+              <option value="">Выберите кофейню</option>
+              <option value="coffee_spot1">ул. Кофейная, 56</option>
+              <option value="coffee_spot2">пр. Ароматный, 12</option>
+              <option value="coffee_spot3">пер. Бобовый, 3</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Дата и время*</label>
+            <input type="datetime-local" name="datetime" required 
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                   min="2025-05-23T10:00" max="2025-12-31T22:00">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Количество человек*</label>
+            <select name="guests" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+              <option value="">Выберите количество</option>
+              <option value="1">1 человек</option>
+              <option value="2">2 человека</option>
+              <option value="3">3 человека</option>
+              <option value="4">4 человека</option>
+              <option value="5">5+ человек</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Ваше имя*</label>
+            <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Телефон*</label>
+            <input type="tel" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="+7 (___) ___-__-__">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Email</label>
+            <input type="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Комментарий</label>
+            <textarea name="comment" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" rows="2"></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="flex items-center">
+              <input type="checkbox" name="special_requests" class="rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+              <span class="ml-2 text-sm text-gray-600">Особые пожелания к столику</span>
+            </label>
+          </div>
+          <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg">
+            Подтвердить бронирование
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Success Modal -->
+  <div id="bookingSuccessModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-8 text-center">
+      <div class="text-green-500 text-5xl mb-4">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 class="text-2xl font-bold mb-2">Бронирование подтверждено!</h3>
+      <p class="text-gray-600 mb-6" id="bookingSuccessMessage">Мы ждем вас в нашей кофейне. Детали бронирования отправлены на вашу почту.</p>
+      <button id="closeBookingSuccess" class="w-full bg-amber-800 hover:bg-amber-700 text-white py-3 rounded-lg">
+        Понятно
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-amber-900 text-white py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Kaffé</h3>
+          <p class="text-amber-200">Авторский кофе с душой — местной обжарки, отборных сортов, идеального приготовления.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Навигация</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-amber-200 hover:text-white transition">Главная</a></li>
+            <li><a href="menu.html" class="text-amber-200 hover:text-white transition">Меню</a></li>
+            <li><a href="promotions.html" class="text-amber-200 hover:text-white transition">Акции</a></li>
+            <li><a href="index.html#visit" class="text-amber-200 hover:text-white transition">Контакты</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Контакты</h4>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-map-marker-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">ул. Кофейная, 56, Москва</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-phone-alt mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">+7 (495) 123-45-67</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-envelope mt-1 mr-3 text-amber-300"></i>
+              <span class="text-amber-200">hello@kaffe.ru</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 uppercase tracking-wider text-sm">Рассылка</h4>
+          <p class="text-amber-200 mb-4">Подпишитесь на обновления и специальные предложения.</p>
+          <form class="flex">
+            <input type="email" 
+                   placeholder="Ваш email" 
+                   class="px-4 py-2 rounded-l-lg text-gray-900 focus:outline-none w-full">
+            <button type="submit" 
+                    class="bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-r-lg transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-amber-800 mt-12 pt-8 text-center text-sm text-amber-300">
+        <p>&copy; 2025 Kaffé. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Инициализация анимаций
+      AOS.init({
+        duration: 800,
+        once: true
+      });
+
+      // Данные акций
+      const promotions = {
+        1: {
+          title: "Кофе + десерт = гармония",
+          image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          date: "До 30.09.2025",
+          location: "Все кофейни Kaffé",
+          content: "<p>Насладитесь идеальным сочетанием нашего фирменного кофе и авторских десертов от нашего шеф-кондитера. В рамках акции при заказе любого кофе из меню Signature Collection вы получаете один из сезонных десертов на выбор совершенно бесплатно.</p><p>Акция действует ежедневно с 14:00 до 18:00 во всех кофейнях сети. Количество предложений ограничено.</p>",
+          terms: [
+            "Акция действует только для потребления в кофейне",
+            "Один десерт на один заказ кофе",
+            "Не суммируется с другими предложениями",
+            "Действует в будние дни с 14:00 до 18:00"
+          ]
+        },
+        2: {
+          title: "Джазовые вечера",
+          image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          date: "Каждую пятницу",
+          location: "ул. Кофейная, 56",
+          content: "<p>Погрузитесь в атмосферу настоящего джаза каждую пятницу вечером. В нашем уютном зале вас ждут выступления лучших музыкантов города и специальное вечернее меню.</p><p>Для студентов действует скидка 15% на все напитки и десерты при предъявлении студенческого билета. Рекомендуем бронировать столики заранее.</p>",
+          terms: [
+            "С 19:00 до 22:00 каждую пятницу",
+            "Скидка по студенческому 15%",
+            "Бронирование столиков рекомендовано",
+            "Специальное вечернее меню"
+          ]
+        },
+        3: {
+          title: "Мастер-класс от бариста",
+          image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          date: "25.10.2025",
+          location: "пр. Ароматный, 12",
+          content: "<p>Уникальная возможность научиться искусству латте-арта у нашего чемпиона России по бариста-арту! На двухчасовом мастер-классе вы освоите базовые техники, узнаете секреты идеального эспрессо и сможете создать свои первые рисунки на кофе.</p><p>В стоимость включены: профессиональное оборудование, кофе для практики, дегустация разных сортов и сертификат участника. Группы до 8 человек.</p>",
+          terms: [
+            "25 октября с 12:00 до 14:00",
+            "Стоимость: 2500 ₽",
+            "Необходима предварительная запись",
+            "Включены все материалы"
+          ]
+        }
+      };
+
+      // Данные событий
+      const events = {
+        1: {
+          title: "Вечер поэзии и кофе",
+          date: "15.11.2025 19:00",
+          location: "ул. Кофейная, 56",
+          description: "Чтение стихов под акустическую музыку с дегустацией специально подобранных сортов кофе."
+        },
+        2: {
+          title: "Эфиопская кофейная церемония",
+          date: "22.11.2025 18:00",
+          location: "пр. Ароматный, 12",
+          description: "Аутентичная церемония приготовления кофе по традициям Эфиопии с рассказом о культуре кофе."
+        }
+      };
+
+      // Обработчики для кнопок "Узнать подробнее"
+      document.querySelectorAll('.promotion-details-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const promoId = this.getAttribute('data-promo-id');
+          const promotion = promotions[promoId];
+          
+          document.getElementById('promotionModalTitle').textContent = promotion.title;
+          document.getElementById('promotionModalImage').src = promotion.image;
+          document.getElementById('promotionModalImage').alt = promotion.title;
+          document.getElementById('promotionModalDate').textContent = promotion.date;
+          document.getElementById('promotionModalLocationText').textContent = promotion.location;
+          document.getElementById('promotionModalContent').innerHTML = promotion.content;
+          
+          const termsList = document.getElementById('promotionModalTerms');
+          termsList.innerHTML = '';
+          promotion.terms.forEach(term => {
+            const li = document.createElement('li');
+            li.textContent = term;
+            termsList.appendChild(li);
+          });
+          
+          document.getElementById('promotionModal').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      // Обработчики для кнопок "Забронировать место"
+      document.querySelectorAll('.book-event-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const eventId = this.getAttribute('data-event-id');
+          const event = events[eventId];
+
+          document.getElementById('eventId').value = eventId;
+          document.getElementById('eventName').value = event.title;
+          document.getElementById('eventDateTime').value = event.date;
+          document.getElementById('eventLocation').value = event.location;
+          
+          document.getElementById('eventBookingModal').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      // Обработчик для кнопки "Забронировать столик" в модалке акции
+      document.getElementById('bookTableBtn').addEventListener('click', function() {
+        document.getElementById('promotionModal').classList.add('hidden');
+        document.getElementById('tableBookingModal').classList.remove('hidden');
+      });
+
+      // Закрытие модальных окон
+      document.getElementById('closePromotionModal').addEventListener('click', function() {
+        document.getElementById('promotionModal').classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+
+      document.getElementById('closeEventBookingModal').addEventListener('click', function() {
+        document.getElementById('eventBookingModal').classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+
+      document.getElementById('closeTableBookingModal').addEventListener('click', function() {
+        document.getElementById('tableBookingModal').classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+
+      document.getElementById('closeBookingSuccess').      addEventListener('click', function() {
+        document.getElementById('bookingSuccessModal').classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+
+      // Mobile Menu Toggle
+      const openMenuBtn = document.getElementById('openMenu');
+      const mobileMenu = document.createElement('div');
+      mobileMenu.id = 'mobileMenu';
+      mobileMenu.className = 'fixed inset-0 bg-amber-900/95 z-50 hidden flex flex-col items-center justify-center md:hidden';
+      mobileMenu.innerHTML = `
+        <button id="closeMenu" class="absolute top-6 right-6 text-2xl text-white">
+          <i class="fas fa-times"></i>
+        </button>
+        <nav class="flex flex-col items-center space-y-6 text-lg font-medium text-white">
+          <a href="index.html" class="hover:text-amber-300 transition">Главная</a>
+          <a href="menu.html" class="hover:text-amber-300 transition">Меню</a>
+          <a href="promotions.html" class="text-amber-300 transition">Акции</a>
+          <a href="index.html#visit" class="hover:text-amber-300 transition">Контакты</a>
+        </nav>
+      `;
+      document.body.appendChild(mobileMenu);
+
+      openMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+
+      document.getElementById('closeMenu').addEventListener('click', function() {
+        mobileMenu.classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+
+      // Form Submission Handling
+      const bookingForms = [document.getElementById('eventBookingForm'), document.getElementById('tableBookingForm')];
+      bookingForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          // Simulate form submission
+          const formData = new FormData(form);
+          console.log('Form submitted:', Object.fromEntries(formData));
+
+          // Show success modal
+          document.getElementById('eventBookingModal').classList.add('hidden');
+          document.getElementById('tableBookingModal').classList.add('hidden');
+          
+          const bookingSuccessMessage = document.getElementById('bookingSuccessMessage');
+          const name = formData.get('name') || 'Гость';
+          bookingSuccessMessage.textContent = `Спасибо, ${name}! Ваше бронирование подтверждено. Детали отправлены на вашу почту.`;
+          
+          document.getElementById('bookingSuccessModal').classList.remove('hidden');
+          
+          // Reset form
+          form.reset();
+        });
+      });
+
+      // Newsletter Form Submission
+      const newsletterForm = document.querySelector('footer form');
+      newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        console.log('Newsletter subscription:', email);
+        alert('Спасибо за подписку! Вы будете получать наши обновления.');
+        this.reset();
+      });
+
+      // Close modals on outside click
+      document.querySelectorAll('#promotionModal, #eventBookingModal, #tableBookingModal, #bookingSuccessModal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+          if (e.target === this) {
+            this.classList.add('hidden');
+            document.body.style.overflow = '';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
