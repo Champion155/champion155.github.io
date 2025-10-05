@@ -3,21 +3,25 @@
   <url>
     <loc>https://champion155.github.io/</loc>
     <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://champion155.github.io/about.html</loc>
     <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://champion155.github.io/contacts.html</loc>
     <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://champion155.github.io/promotions.html</loc>
     <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>
